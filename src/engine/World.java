@@ -1,5 +1,8 @@
 package engine;
 
+import java.awt.RenderingHints.Key;
+import java.util.ArrayList;
+
 import javafx.animation.AnimationTimer;
 import javafx.scene.layout.Pane;
 
@@ -10,18 +13,22 @@ public abstract class World extends Pane {
 	private Timer timer;
 	private boolean isOn = false;
 	
+	private boolean widthSet = false;
+	private boolean heightSet = false;
 	private double width = 0.0;
 	private double height = 0.0;
+	private ArrayList<Key> keysPressed;
 	// methods
-	public World(Double w, double h) {
+	public World() {
 		timer = new Timer();
 		
-		// lol i used this shitty way to make it just to get some errors out
-		width = width + w;
-		height = height + h;
+		keysPressed = new ArrayList<Key>();
+		
 	}
 	
 	public abstract void act(long now);
+	
+	public abstract void onDimensionsInitialized();
 	
 	public void addActor(Actor actor) {
 		
@@ -34,13 +41,10 @@ public abstract class World extends Pane {
 	}
 	public boolean isKeyPressed(javafx.scene.input.KeyCode code) {
 		return false;
-		
 	}
 	public boolean isStopped() {
 		return isOn;
-		
 	}
-	public abstract void onDimensionsInitialized();
 	
 	public void remove(Actor actor) {
 		
