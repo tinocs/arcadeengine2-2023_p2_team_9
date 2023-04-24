@@ -26,7 +26,7 @@ public abstract class World extends Pane {
 	// methods
 	public World() {
 		timer = new Timer();
-		
+		 
 		keysPressed = new ArrayList<Key>();
 		
 		DoubleProperty widthListener = new SimpleDoubleProperty(width);
