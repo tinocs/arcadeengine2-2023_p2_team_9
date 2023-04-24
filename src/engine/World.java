@@ -48,11 +48,23 @@ public abstract class World extends Pane {
 		this.getChildren().add(actor);
 		actor.addedToWorld();
 	}
-	public <A extends Actor> void getObjects(java.lang.Class<A> cls) {
-		
+	public <A extends Actor> java.util.List<A> getObjects(Class cls) {
+		ArrayList list = new ArrayList();
+		for (Object obj : this.getChildren()) {
+			if (obj.getClass() == cls) {
+				list.add(obj);
+			}
+		}
+		return list;
 	}
-	public <A extends Actor> void getObjectsAt(double x, double y, java.lang.Class<A> cls) {
-		
+	public <A extends Actor> java.util.List<A> getObjectsAt(double x, double y, java.lang.Class<A> cls) {
+		ArrayList list = new ArrayList();
+		for (Object obj : this.getChildren()) {
+			if (obj.getClass() == cls) {
+				list.add(obj);
+			}
+		}
+		return list;
 	}
 	public boolean isKeyPressed(javafx.scene.input.KeyCode code) {
 		return false;
