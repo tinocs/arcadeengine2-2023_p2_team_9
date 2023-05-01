@@ -7,6 +7,7 @@ public class test {
 
 	public static void main(String[] args) {
 		System.out.println("nice");
+		System.out.println("nice 2");
 	}
 
 }
