@@ -29,22 +29,21 @@ public abstract class World extends Pane {
 		 
 		keysPressed = new ArrayList<Key>();
 		
-		DoubleProperty widthListener = new SimpleDoubleProperty(width);
-		DoubleProperty heightListener = new SimpleDoubleProperty(height);
-		widthListener.addListener(new WidthHandler());
-		heightListener.addListener(new HeightHandler());
+		
+		widthProperty().addListener(new WidthHandler());
+		heightProperty().addListener(new HeightHandler());
 		
 		this.sceneProperty().addListener(new SceneListener());
 		
 		//ArrayListProperty<Object> arrayList = new ArrayListProperty<>(); 
-		//arrayList.addListener();
+		//arrayList.addListener(); 
 	}
 	
 	public abstract void act(long now);
 	
 	public abstract void onDimensionsInitialized();
 	
-	public void addActor(Actor actor) {
+	public void add(Actor actor) {
 		this.getChildren().add(actor);
 		actor.addedToWorld();
 	}
