@@ -2,6 +2,7 @@ package engine;
 
 import java.util.List;
 
+import javafx.geometry.Bounds;
 import javafx.scene.image.ImageView;
 
 //TODO finish the shit that goes in the code my dudes
@@ -18,10 +19,10 @@ public abstract class Actor extends ImageView {
 		
 	}
 	public double getHeight() {
-		return 0.0;
+		return getHeight();
 	}
 	public double getWidth() {
-		return 0.0;
+		return getWidth();
 	}
 	public <A extends Actor> List<A> getIntersectingObjects(Class cls) {
 		return null;
@@ -30,7 +31,7 @@ public abstract class Actor extends ImageView {
 		return null;
 	}
 	public World getWorld() {
-		return null;
+		return (World) getParent();
 	}
 	public void move(double dx, double dy) {
 		
