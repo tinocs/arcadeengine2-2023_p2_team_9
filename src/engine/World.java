@@ -2,12 +2,17 @@ package engine;
 
 import java.awt.RenderingHints.Key;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import javafx.animation.AnimationTimer;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 
 // TODO 
@@ -16,22 +21,22 @@ public abstract class World extends Pane {
 	// private fields as listed
 	private Timer timer;
 	private boolean isOn = false;
-	
-	private boolean widthSet = false;
-	private boolean heightSet = false;
+
 	private boolean dimSet = false;
-	private ArrayList<Key> keysPressed;
+	private Set<KeyCode> keysPressed;
 	// methods
 	public World() {
 		timer = new Timer();
 		 
-		keysPressed = new ArrayList<Key>();
+		keysPressed = new HashSet<KeyCode>();
 		
 		
 		widthProperty().addListener(new WidthHandler());
 		heightProperty().addListener(new HeightHandler());
 		
-		this.sceneProperty().addListener(new SceneListener());
+		if(this != null) {
+			this.sceneProperty().addListener(new SceneListener());
+		}
 		
 		//ArrayListProperty<Object> arrayList = new ArrayListProperty<>(); 
 		//arrayList.addListener(); 
@@ -63,8 +68,9 @@ public abstract class World extends Pane {
 		}
 		return list;
 	}
+	
 	public boolean isKeyPressed(javafx.scene.input.KeyCode code) {
-		return false;
+		return keysPressed.contains(code);
 	}
 	public boolean isStopped() {
 		return isOn;
@@ -87,6 +93,10 @@ public abstract class World extends Pane {
 		@Override
 		public void handle(long now) {
 			act(now);
+			List<Actor> list = getObjects(Actor.class);
+			for (int i = 0; i < list.size(); i++) {
+				list.get(i).act(now);
+			}
 		}
 		
 	}
@@ -109,7 +119,9 @@ public abstract class World extends Pane {
 
 		@Override
 		public void changed(ObservableValue<? extends Scene> observable, Scene oldValue, Scene newValue) {
-			
+			if(newValue != null) {
+				
+			}
 		}
 		
 	}

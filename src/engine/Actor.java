@@ -35,17 +35,17 @@ public abstract class Actor extends ImageView {
 		}
 		return intObj;
 	}
-	public <A extends Actor> A getOneIntersectingObject(Class cls) {
+	public <A extends Actor> A getOneIntersectingObject(java.lang.Class<A> cls) {
 		
-		
-		return null;
 	}
 	public World getWorld() {
 		return (World) getParent();
 	}
 	public void move(double dx, double dy) {
-		setX(getX()+dx);
-		setY(getY()+dy);
+		this.setX(this.getX()+dx);
+		this.setY(this.getY()+dy);
 	}
-
+	public void jump(double height) {
+		
+	}
 }
