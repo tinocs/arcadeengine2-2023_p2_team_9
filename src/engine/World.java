@@ -20,8 +20,6 @@ public abstract class World extends Pane {
 	private boolean widthSet = false;
 	private boolean heightSet = false;
 	private boolean dimSet = false;
-	private double width = 0.0;
-	private double height = 0.0;
 	private ArrayList<Key> keysPressed;
 	// methods
 	public World() {

@@ -768,7 +768,7 @@ public class TestWorld extends World {
 			if (!passedAllTests) System.out.println("ONE OR MORE TESTS FAILED!");
 			if (exceptions.size() > 0) System.out.println("EXCEPTIONS WERE THROWN!");
 		}
-		Platform.exit();
+		//Platform.exit();
 	}
 
 	public boolean isShouldRemoveCoinThisFrame() {
