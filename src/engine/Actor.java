@@ -1,11 +1,12 @@
 package engine;
 
-import java.util.List;
+import java.util.ArrayList;
+import java.util.List;	
 
 import javafx.geometry.Bounds;
 import javafx.scene.image.ImageView;
 
-//TODO finish the shit that goes in the code my dudes
+//TODO 
 
 public abstract class Actor extends ImageView {
 
@@ -19,13 +20,13 @@ public abstract class Actor extends ImageView {
 		
 	}
 	public double getHeight() {
-		return getHeight();
+		return this.getBoundsInParent().getHeight();
 	}
 	public double getWidth() {
-		return getWidth();
+		return this.getBoundsInParent().getWidth();
 	}
 	public <A extends Actor> List<A> getIntersectingObjects(Class cls) {
-		return null;
+		ArrayList<A> obj = getWorld().getObjects(cls)
 	}
 	public <A extends Actor> A getOneIntersectingObject(Class cls) {
 		return null;
