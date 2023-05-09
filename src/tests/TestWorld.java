@@ -477,20 +477,20 @@ public class TestWorld extends World {
 				counterCoins.add(c);
 				add(c);
 			}
-			
-			KeyFrame testStart = new KeyFrame(Duration.seconds(0.5), e -> testStart());
-			KeyFrame stopAndRecordFrameCount = new KeyFrame(Duration.seconds(1), e -> stopAndRecordFrameCount());
-			KeyFrame testAfterStop = new KeyFrame(Duration.seconds(1.5), e -> testAfterStop());
-			KeyFrame startAgain = new KeyFrame(Duration.seconds(2.0), e -> startAgain());
-			KeyFrame pressUpAndRightKeys = new KeyFrame(Duration.seconds(2.5), e -> pressUpAndRightKeys());
-			KeyFrame testUpAndRightKeyPress = new KeyFrame(Duration.seconds(3.0), e -> testUpAndRightKeyPress());
-			KeyFrame releaseUpKey = new KeyFrame(Duration.seconds(3.5), e -> releaseUpKey());
-			KeyFrame testUpKeyRelease = new KeyFrame(Duration.seconds(4.0), e -> testUpKeyRelease());
-			KeyFrame releaseRightKey = new KeyFrame(Duration.seconds(4.5), e -> releaseRightKey());
-			KeyFrame testRightKeyRelease = new KeyFrame(Duration.seconds(5.0), e -> testRightKeyRelease()); 
-			KeyFrame removeCoin = new KeyFrame(Duration.seconds(5.5), e -> removeCoin());
-			KeyFrame removePlayer1 = new KeyFrame(Duration.seconds(6.0), e -> removePlayer1());
-			KeyFrame finishTest = new KeyFrame(Duration.seconds(6.5), e -> finishTest());
+			int delay = 5;
+			KeyFrame testStart = new KeyFrame(Duration.seconds(0.5*delay*4), e -> testStart());
+			KeyFrame stopAndRecordFrameCount = new KeyFrame(Duration.seconds(1*delay*4), e -> stopAndRecordFrameCount());
+			KeyFrame testAfterStop = new KeyFrame(Duration.seconds(1.5*delay), e -> testAfterStop());
+			KeyFrame startAgain = new KeyFrame(Duration.seconds(2.0*delay), e -> startAgain());
+			KeyFrame pressUpAndRightKeys = new KeyFrame(Duration.seconds(2.5*delay), e -> pressUpAndRightKeys());
+			KeyFrame testUpAndRightKeyPress = new KeyFrame(Duration.seconds(3.0*delay), e -> testUpAndRightKeyPress());
+			KeyFrame releaseUpKey = new KeyFrame(Duration.seconds(3.5*delay), e -> releaseUpKey());
+			KeyFrame testUpKeyRelease = new KeyFrame(Duration.seconds(4.0*delay), e -> testUpKeyRelease());
+			KeyFrame releaseRightKey = new KeyFrame(Duration.seconds(4.5*delay), e -> releaseRightKey());
+			KeyFrame testRightKeyRelease = new KeyFrame(Duration.seconds(5.0*delay), e -> testRightKeyRelease()); 
+			KeyFrame removeCoin = new KeyFrame(Duration.seconds(5.5*delay), e -> removeCoin());
+			KeyFrame removePlayer1 = new KeyFrame(Duration.seconds(6.0*delay), e -> removePlayer1());
+			KeyFrame finishTest = new KeyFrame(Duration.seconds(6.5*delay), e -> finishTest());
 			Timeline timeline = new Timeline(
 					testStart,
 					stopAndRecordFrameCount,
