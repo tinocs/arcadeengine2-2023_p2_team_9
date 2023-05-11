@@ -120,7 +120,7 @@ public abstract class World extends Pane {
 		@Override
 		public void changed(ObservableValue<? extends Scene> observable, Scene oldValue, Scene newValue) {
 			if(newValue != null) {
-				
+				requestFocus();
 			}
 		}
 		
