@@ -35,7 +35,7 @@ public abstract class Actor extends ImageView {
 		}
 		return intObj;
 	}
-	public <A extends Actor> A getOneIntersectingObject(java.lang.Class<A> cls) {
+	public <A extends Actor> A getOneIntersectingObject(Class<A> cls) {
 		
 	}
 	public World getWorld() {
