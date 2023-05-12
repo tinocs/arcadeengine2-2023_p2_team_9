@@ -16,7 +16,7 @@ public class Player extends TestActor {
     	playerNum++;
     	name = "player" + playerNum;
     }
-
+    
 	public String getName() {
 		return name;
 	}
