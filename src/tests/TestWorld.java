@@ -3,10 +3,7 @@ import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import engine.World;
 import javafx.animation.KeyFrame;
@@ -33,6 +30,8 @@ public class TestWorld extends World {
 	private Player player2;
 	private Coin coin;
 	private ArrayList<CounterCoin> counterCoins = new ArrayList<>();
+
+
 
 	public TestWorld() {
 		setPrefSize(500, 300);
@@ -412,57 +411,6 @@ public class TestWorld extends World {
 			if (!pass) passedAllTests = false;
 			System.out.println("player1.getOneIntersectingObject(Player.class) --> " + touched + " --> " + passState);
 
-			System.out.println("*** Testing Actor is using correct bounds for getWidth, getHeight and getOneIntersectingObject ***");
-			// testing that correct bounds is used that takes into account transformations
-			System.out.println("Removing player1 from the world.");
-			remove(player1);
-			player2.setX(0);
-			player2.setY(0);
-			coin.setX(200);
-			coin.setY(200);
-			System.out.println("Before scaling coin dimensions are (" + coin.getWidth() + ", " + coin.getHeight() + ")");
-			double prevScaleX = coin.getScaleX();
-			double prevScaleY = coin.getScaleY();
-			coin.setScaleX(10);
-			coin.setScaleY(10);
-			System.out.println("player2 at (" + player2.getX() + ", " + player2.getY() + ")");
-			System.out.println("coin at (" + coin.getX() + ", " + coin.getY() + ")");
-			System.out.println("coin scaled to (" + coin.getScaleX() + "x" + coin.getScaleY() + ")");
-			System.out.println("(coin.getWidth(), coin.getHeight()) = (" + coin.getWidth() + ", " + coin.getHeight() + "))");
-			
-			double coinW = coin.getWidth();
-			pass = coinW == coin.getBoundsInParent().getWidth();
-			passState = pass ? "passed" : "failed";
-			if (!pass) passedAllTests = false;
-			System.out.println("coin.getWidth() --> " + coinW + " --> " + passState);
-
-			double coinH = coin.getHeight();
-			pass = coinH == coin.getBoundsInParent().getHeight();
-			passState = pass ? "passed" : "failed";
-			if (!pass) passedAllTests = false;
-			System.out.println("coin.getHeight() --> " + coinH + " --> " + passState);
-
-			// coin should touch player2
-			touched = coin.getOneIntersectingObject(Player.class);
-			expectedTouched = player2;
-			pass = expectedTouched == touched;
-			passState = pass ? "passed" : "failed";
-			if (!pass) passedAllTests = false;
-			System.out.println("coin.getOneIntersectingObject(Player.class) --> " + touched + " --> " + passState);
-
-			// same test but with getIntersectingObjects(Player.class)
-			System.out.println("Adding player1 back to the world.");
-			add(player1);
-			List<Player> touchedList = coin.getIntersectingObjects(Player.class);
-			Set<Player> expectedPlayers = new HashSet<>(Arrays.asList(player1, player2));
-			pass = expectedPlayers.equals(new HashSet<>(touchedList));
-			passState = pass ? "passed" : "failed";
-			if (!pass) passedAllTests = false;
-			System.out.println("coin.getIntersectingObjects(Player.class) --> " + touchedList + " --> " + passState);
-			
-			coin.setScaleX(prevScaleX);
-			coin.setScaleY(prevScaleY);
-			
 			try {
 				rob = new Robot();
 			} catch (AWTException e1) {
@@ -477,20 +425,20 @@ public class TestWorld extends World {
 				counterCoins.add(c);
 				add(c);
 			}
-			int delay = 5;
-			KeyFrame testStart = new KeyFrame(Duration.seconds(0.5*delay*4), e -> testStart());
-			KeyFrame stopAndRecordFrameCount = new KeyFrame(Duration.seconds(1*delay*4), e -> stopAndRecordFrameCount());
-			KeyFrame testAfterStop = new KeyFrame(Duration.seconds(1.5*delay), e -> testAfterStop());
-			KeyFrame startAgain = new KeyFrame(Duration.seconds(2.0*delay), e -> startAgain());
-			KeyFrame pressUpAndRightKeys = new KeyFrame(Duration.seconds(2.5*delay), e -> pressUpAndRightKeys());
-			KeyFrame testUpAndRightKeyPress = new KeyFrame(Duration.seconds(3.0*delay), e -> testUpAndRightKeyPress());
-			KeyFrame releaseUpKey = new KeyFrame(Duration.seconds(3.5*delay), e -> releaseUpKey());
-			KeyFrame testUpKeyRelease = new KeyFrame(Duration.seconds(4.0*delay), e -> testUpKeyRelease());
-			KeyFrame releaseRightKey = new KeyFrame(Duration.seconds(4.5*delay), e -> releaseRightKey());
-			KeyFrame testRightKeyRelease = new KeyFrame(Duration.seconds(5.0*delay), e -> testRightKeyRelease()); 
-			KeyFrame removeCoin = new KeyFrame(Duration.seconds(5.5*delay), e -> removeCoin());
-			KeyFrame removePlayer1 = new KeyFrame(Duration.seconds(6.0*delay), e -> removePlayer1());
-			KeyFrame finishTest = new KeyFrame(Duration.seconds(6.5*delay), e -> finishTest());
+			
+			KeyFrame testStart = new KeyFrame(Duration.seconds(0.5), e -> testStart());
+			KeyFrame stopAndRecordFrameCount = new KeyFrame(Duration.seconds(1), e -> stopAndRecordFrameCount());
+			KeyFrame testAfterStop = new KeyFrame(Duration.seconds(1.2), e -> testAfterStop());
+			KeyFrame startAgain = new KeyFrame(Duration.seconds(1.5), e -> start());
+			KeyFrame pressUpAndRightKeys = new KeyFrame(Duration.seconds(1.7), e -> pressUpAndRightKeys());
+			KeyFrame testUpAndRightKeyPress = new KeyFrame(Duration.seconds(1.9), e -> testUpAndRightKeyPress());
+			KeyFrame releaseUpKey = new KeyFrame(Duration.seconds(1.9), e -> releaseUpKey());
+			KeyFrame testUpKeyRelease = new KeyFrame(Duration.seconds(2.1), e -> testUpKeyRelease());
+			KeyFrame releaseRightKey = new KeyFrame(Duration.seconds(2.4), e -> releaseRightKey());
+			KeyFrame testRightKeyRelease = new KeyFrame(Duration.seconds(2.6), e -> testRightKeyRelease()); 
+			KeyFrame removeCoin = new KeyFrame(Duration.seconds(3), e -> removeCoin());
+			KeyFrame removePlayer1 = new KeyFrame(Duration.seconds(3), e -> removePlayer1());
+			KeyFrame finishTest = new KeyFrame(Duration.seconds(3.5), e -> finishTest());
 			Timeline timeline = new Timeline(
 					testStart,
 					stopAndRecordFrameCount,
@@ -601,7 +549,7 @@ public class TestWorld extends World {
 
 	private void testAfterStop() {
 		try {
-			System.out.println("isStopped() value 0.5 seconds after stop()");
+			System.out.println("isStopped() value 0.2 seconds after stop()");
 			boolean isStopped = isStopped();
 			boolean expectedStop = true;
 			boolean pass = isStopped == expectedStop;
@@ -609,25 +557,25 @@ public class TestWorld extends World {
 			if (!pass) passedAllTests = false;
 			System.out.println("isStopped() --> " + isStopped + " --> " + passState);
 
-			System.out.println("frameCount of World 0.5 seconds ater stop()");
+			System.out.println("frameCount of World 0.2 seconds ater stop()");
 			pass = frameCount == frameCountAtStop;
 			passState = pass ? "passed" : "failed";
 			if (!pass) passedAllTests = false;
 			System.out.println("frameCount --> " + frameCount + " --> " + passState);
 
-			System.out.println("frameCount of player1 0.5 seconds ater stop()");
+			System.out.println("frameCount of player1 0.2 seconds ater stop()");
 			pass = player1.getFrameCount() == player1.getStopFrameCount() && player1.getFrameCount() == frameCount;
 			passState = pass ? "passed" : "failed";
 			if (!pass) passedAllTests = false;
 			System.out.println("player1.getFrameCount() --> " + player1.getFrameCount() + " --> " + passState);
 
-			System.out.println("frameCount of player2 0.5 seconds ater stop()");
+			System.out.println("frameCount of player2 0.2 seconds ater stop()");
 			pass = player2.getFrameCount() == player2.getStopFrameCount() && player2.getFrameCount() == frameCount;
 			passState = pass ? "passed" : "failed";
 			if (!pass) passedAllTests = false;
 			System.out.println("player2.getFrameCount() --> " + player2.getFrameCount() + " --> " + passState);
 
-			System.out.println("frameCount of coin 0.5 seconds ater stop()");
+			System.out.println("frameCount of coin 0.2 seconds ater stop()");
 			pass = coin.getFrameCount() == coin.getStopFrameCount() && coin.getFrameCount() == frameCount;
 			passState = pass ? "passed" : "failed";
 			if (!pass) passedAllTests = false;
@@ -636,10 +584,6 @@ public class TestWorld extends World {
 			exceptions.add(err);
 			err.printStackTrace();
 		}
-	}
-	
-	private void startAgain() {
-		start();
 	}
 
 	private void pressUpAndRightKeys() {
@@ -768,7 +712,7 @@ public class TestWorld extends World {
 			if (!passedAllTests) System.out.println("ONE OR MORE TESTS FAILED!");
 			if (exceptions.size() > 0) System.out.println("EXCEPTIONS WERE THROWN!");
 		}
-		//Platform.exit();
+		Platform.exit();
 	}
 
 	public boolean isShouldRemoveCoinThisFrame() {

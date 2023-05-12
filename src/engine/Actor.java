@@ -11,7 +11,7 @@ import javafx.scene.image.ImageView;
 public abstract class Actor extends ImageView {
 
 	public Actor() {
-		
+		super();
 	}
 	
 	public abstract void act(long now);
