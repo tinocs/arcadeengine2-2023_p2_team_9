@@ -7,14 +7,33 @@
  */
 package game;
 
-public class Ball {
+import engine.Actor;
+import engine.World;
 
+public class Ball extends Actor {
+	World world = getWorld();
+	double height = getHeight();
+	double width = getWidth();
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 
+	@Override
+	public void act(long now) {
+		// TODO Auto-generated method stub
+		move(getX(), getY());
+		borders();
+	}
+	public void borders() {
+		if(getX() < 0 || getX() > width) {
+			move(-getX(),getY());
+		}
+		if(getY() < 0 || getY() > height) {
+			move(getX(),-getY());
+		}
+		
+		
+		//paddle
 	}
 
 }
