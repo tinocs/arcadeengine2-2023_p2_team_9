@@ -29,14 +29,18 @@ public abstract class Actor extends ImageView {
 		List<Actor> obj = getWorld().getObjects(cls);
 		List<A> intObj = new ArrayList<A>();
 		for (Actor a : obj) {
-			if (a.intersects(getBoundsInLocal()) && a.getClass().equals(cls) && !a.equals(this)) {
+			if (a.intersects(getBoundsInParent()) && a != this) {
 				intObj.add((A) a);
 			}
 		}
 		return intObj;
 	}
 	public <A extends Actor> A getOneIntersectingObject(Class<A> cls) {
-		
+		List<A> temp  = getIntersectingObjects(cls);
+		if(temp.size() <= 0) {
+			return null;
+		}
+		return temp.get(0);
 	}
 	public World getWorld() {
 		return (World) getParent();
@@ -44,8 +48,5 @@ public abstract class Actor extends ImageView {
 	public void move(double dx, double dy) {
 		this.setX(this.getX()+dx);
 		this.setY(this.getY()+dy);
-	}
-	public void jump(double height) {
-		
 	}
 }

@@ -1,18 +1,19 @@
 package engine;
 
-import java.awt.RenderingHints.Key;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import javafx.animation.AnimationTimer;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
+import javafx.geometry.Bounds;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 
 // TODO 
@@ -21,13 +22,15 @@ public abstract class World extends Pane {
 	// private fields as listed
 	private Timer timer;
 	private boolean isOn = false;
+	private boolean widthSet = false;
+	private boolean heightSet = false;
 
 	private boolean dimSet = false;
 	private Set<KeyCode> keysPressed;
 	// methods
 	public World() {
 		timer = new Timer();
-		 
+		
 		keysPressed = new HashSet<KeyCode>();
 		
 		
@@ -38,8 +41,25 @@ public abstract class World extends Pane {
 			this.sceneProperty().addListener(new SceneListener());
 		}
 		
-		//ArrayListProperty<Object> arrayList = new ArrayListProperty<>(); 
-		//arrayList.addListener(); 
+		setOnKeyPressed(new EventHandler<KeyEvent>() {
+
+			@Override
+			public void handle(KeyEvent event) {
+				// TODO Auto-generated method stub
+				keysPressed.add(event.getCode());
+			}
+			
+		});
+		
+		setOnKeyReleased(new EventHandler<KeyEvent>() {
+
+			@Override
+			public void handle(KeyEvent event) {
+				// TODO Auto-generated method stub
+				keysPressed.remove(event.getCode());
+			}
+			
+		});
 	}
 	
 	public abstract void act(long now);
@@ -50,19 +70,20 @@ public abstract class World extends Pane {
 		this.getChildren().add(actor);
 		actor.addedToWorld();
 	}
-	public <A extends Actor> java.util.List<A> getObjects(Class cls) {
-		ArrayList list = new ArrayList();
-		for (Object obj : this.getChildren()) {
-			if (obj.getClass() == cls) {
-				list.add(obj);
+	public <A extends Actor> java.util.List<A> getObjects(Class<A> cls) {
+		ArrayList<A> list = new ArrayList<A>();
+		for (Node obj : this.getChildren()) {
+			if (cls.isInstance(obj)) {
+				list.add(cls.cast(obj));
 			}
 		}
 		return list;
 	}
-	public <A extends Actor> java.util.List<A> getObjectsAt(double x, double y, java.lang.Class<A> cls) {
-		ArrayList list = new ArrayList();
-		for (Object obj : this.getChildren()) {
-			if (obj.getClass() == cls) {
+	public <A extends Actor> java.util.List<A> getObjectsAt(double x, double y, Class<A> cls) {
+		ArrayList<A> list = new ArrayList<A>();
+		for (A obj : getObjects(cls)) {
+			Bounds bound = obj.getBoundsInParent();
+			if (bound.contains(x, y)) {
 				list.add(obj);
 			}
 		}
@@ -73,7 +94,7 @@ public abstract class World extends Pane {
 		return keysPressed.contains(code);
 	}
 	public boolean isStopped() {
-		return isOn;
+		return !isOn;
 	}
 	
 	public void remove(Actor actor) {
@@ -95,7 +116,9 @@ public abstract class World extends Pane {
 			act(now);
 			List<Actor> list = getObjects(Actor.class);
 			for (int i = 0; i < list.size(); i++) {
-				list.get(i).act(now);
+				if(list.get(i).getWorld() != null) {
+					list.get(i).act(now);
+				}
 			}
 		}
 		
