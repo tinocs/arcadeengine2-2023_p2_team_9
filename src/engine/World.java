@@ -29,6 +29,7 @@ public abstract class World extends Pane {
 	private Set<KeyCode> keysPressed;
 	// methods
 	public World() {
+		super();
 		timer = new Timer();
 		
 		keysPressed = new HashSet<KeyCode>();
