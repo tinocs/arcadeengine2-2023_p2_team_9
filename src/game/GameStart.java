@@ -20,5 +20,4 @@ public class GameStart extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
-
 }
