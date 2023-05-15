@@ -9,15 +9,22 @@ package game;
 
 import engine.Actor;
 import engine.World;
+import javafx.scene.image.Image;
 
 public class Ball extends Actor {
 	World world = getWorld();
 	double height = getHeight();
 	double width = getWidth();
+	
+	private static final String IMG_PREFIX = "gameresources/";
+	private static final Image BALL_IMAGE = new Image(IMG_PREFIX +"Red-Ball-PNG.png");
 	/**
 	 * @param args
 	 */
 
+	public Ball() {
+		setImage(BALL_IMAGE);
+	}
 	@Override
 	public void act(long now) {
 		// TODO Auto-generated method stub
@@ -31,9 +38,10 @@ public class Ball extends Actor {
 		if(getY() < 0 || getY() > height) {
 			move(getX(),-getY());
 		}
-		
-		
 		//paddle
+		if(getOneIntersectingObject(Paddle.class) != null) {
+			move(getX(), -getY());
+		}
 	}
 
 }
