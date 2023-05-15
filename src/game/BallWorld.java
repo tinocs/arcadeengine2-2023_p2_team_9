@@ -16,7 +16,7 @@ public class BallWorld extends World {
 	public void onDimensionsInitialized() {
 		Ball ball = new Ball();
 		ball.setX(40);
-		ball.setY(40);
+		ball.setY(60);
 		add(ball);
 	}
 

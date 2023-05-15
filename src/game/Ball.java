@@ -12,10 +12,11 @@ import engine.World;
 import javafx.scene.image.Image;
 
 public class Ball extends Actor {
-	World world = getWorld();
-	double height = getHeight();
-	double width = getWidth();
-	
+	//World world = getWorld();
+	double height = 500;
+	double width = 500;
+	private double dx = 2;
+	private double dy = 2;
 	private static final String IMG_PREFIX = "gameresources/";
 	private static final Image BALL_IMAGE = new Image(IMG_PREFIX +"Red-Ball-PNG.png");
 	/**
@@ -26,21 +27,24 @@ public class Ball extends Actor {
 		setImage(BALL_IMAGE);
 	}
 	@Override
+	public void addedToWorld() {
+		getTimer().start();
+	}
+	@Override
 	public void act(long now) {
-		// TODO Auto-generated method stub
-		move(getX(), getY());
+		move(dx, dy);
 		borders();
 	}
 	public void borders() {
-		if(getX() < 0 || getX() > width) {
-			move(-getX(),getY());
+		if(getX() < 0 || getX() > width-getWidth()) {
+			dx = -dx;
 		}
-		if(getY() < 0 || getY() > height) {
-			move(getX(),-getY());
+		if(getY() < 0 || getY() > height-getHeight()) {
+			dy = -dy;
 		}
 		//paddle
 		if(getOneIntersectingObject(Paddle.class) != null) {
-			move(getX(), -getY());
+			dy = -dy;
 		}
 	}
 
