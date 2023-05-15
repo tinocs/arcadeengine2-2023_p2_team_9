@@ -9,16 +9,15 @@ public class BallWorld extends World {
 	}
 
 	@Override
-	public void act(long now) {
-		
+	public void act(long now) {	
 	}
 
 	@Override
 	public void onDimensionsInitialized() {
 		Ball ball = new Ball();
-		ball.setLayoutX(40);
-		ball.setLayoutY(40);
-		getChildren().add(ball);
+		ball.setX(40);
+		ball.setY(40);
+		add(ball);
 	}
 
 }
