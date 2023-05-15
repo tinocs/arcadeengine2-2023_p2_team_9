@@ -12,9 +12,9 @@ import engine.World;
 import javafx.scene.image.Image;
 
 public class Ball extends Actor {
-	//World world = getWorld();
-	double height = 500;
-	double width = 500;
+	World world;
+	double height;
+	double width;
 	private double dx = 2;
 	private double dy = 2;
 	private static final String IMG_PREFIX = "gameresources/";
@@ -28,6 +28,9 @@ public class Ball extends Actor {
 	}
 	@Override
 	public void addedToWorld() {
+		world = getWorld();
+		height = world.getHeight();
+		width = world.getWidth();
 		getTimer().start();
 	}
 	@Override
