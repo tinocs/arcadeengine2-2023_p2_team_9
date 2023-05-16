@@ -9,3 +9,7 @@ added and worked on the world class and driver class
 **5/15/23** (1/2 hour)
 fixed the world class and driver class w/Mr. Ferrante, worked on ball movement
 created an animationtimer in actor class so that actors can function properly and fixed wall collision in ball.java
+
+(45 minutes)
+fixed player and ball collision
+
