@@ -10,6 +10,8 @@ public class BallWorld extends World {
 	Paddle pad;
 	public BallWorld() {
 		setPrefSize(500, 500);
+		this.setMaxHeight(500);
+		this.setMaxWidth(500);
 	}
 
 	@Override
@@ -25,7 +27,7 @@ public class BallWorld extends World {
 		
 		pad = new Paddle();
 		pad.setX(460);
-		pad.setY(460);
+		pad.setY(getHeight()-pad.getHeight());
 		add(pad);
 		
 		setOnMouseMoved(new EventHandler<MouseEvent>() {
