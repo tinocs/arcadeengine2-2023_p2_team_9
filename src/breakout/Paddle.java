@@ -1,4 +1,4 @@
-package game;
+package breakout;
 
 import engine.Actor;
 import javafx.scene.image.Image;

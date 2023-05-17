@@ -1,4 +1,4 @@
-package game;
+package breakout;
 
 import engine.Actor;
 import javafx.scene.image.Image;
@@ -25,5 +25,4 @@ public class Brick extends Actor {
 			getTimer().stop();
 		}
 	}
-
 }

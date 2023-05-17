@@ -1,4 +1,4 @@
-package game;
+package breakout;
 
 import javafx.scene.text.Font;
 import javafx.scene.text.Text; 

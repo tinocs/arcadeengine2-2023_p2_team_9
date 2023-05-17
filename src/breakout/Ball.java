@@ -5,7 +5,7 @@
  *
  * Is this code Working:
  */
-package game;
+package breakout;
 
 import engine.Actor;
 import engine.World;
