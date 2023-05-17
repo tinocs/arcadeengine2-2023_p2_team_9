@@ -61,7 +61,25 @@ public class Ball extends Actor {
 					dx = -dx;
 				}
 			} else {
+				if (getX() <= paddle.getX()+paddle.getWidth()/2) {
+					if (dx > 0) {
+						dx = -dx;
+					}
+				} else if (getX() > paddle.getX()+paddle.getWidth()/2) {
+					if (dx < 0) {
+						dx = -dx;
+					}
+				}
 				dy = -dy;
+				double distance = paddle.getX()+paddle.getWidth()/2 - getX();
+				distance = Math.abs(distance);
+				int scaler = 50;
+				if (dy > 0) {
+					dy = 2 - distance/scaler;
+				} else {
+					dy = distance/scaler - 2;
+				}
+				
 				move(0, -5);
 			}
 		}

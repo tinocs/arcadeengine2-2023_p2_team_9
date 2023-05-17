@@ -35,7 +35,8 @@ public class BallWorld extends World {
 			@Override
 			public void handle(MouseEvent event) {
 				// TODO Auto-generated method stub
-				pad.setX(event.getX()- pad.getWidth()/2);
+				if (event.getX() >= pad.getWidth()/2 && event.getX() <= getWidth()-pad.getWidth()/2)
+					pad.setX(event.getX()- pad.getWidth()/2);
 			}
 			
 		});
