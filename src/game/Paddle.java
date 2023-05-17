@@ -24,5 +24,13 @@ public class Paddle extends Actor {
 		if(getWorld().isKeyPressed(KeyCode.RIGHT)){
 			move(speed,0);
 		}
+		
+		//borders
+		if(getX() < 0) {
+			setX(0.0);
+		}
+		if(getX() > getWorld().getWidth()- getWidth()) {
+			setX(getWorld().getWidth()- getWidth());
+		}
 	}
 }

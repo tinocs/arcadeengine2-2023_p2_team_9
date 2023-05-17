@@ -15,8 +15,8 @@ public class Ball extends Actor {
 	World world;
 	double height;
 	double width;
-	private double dx = 2;
-	private double dy = 2;
+	private double dx = 5;
+	private double dy = 5;
 	private static final String IMG_PREFIX = "gameresources/";
 	private static final Image BALL_IMAGE = new Image(IMG_PREFIX +"Red-Ball-PNG.png");
 	/**
