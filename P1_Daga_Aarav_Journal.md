@@ -13,3 +13,5 @@ created an animationtimer in actor class so that actors can function properly an
 (45 minutes)
 fixed player and ball collision
 
+**5/16/23** (1 hour)
+increased ball collision specificity (depending on how far away it is from the center of the paddle, the dy scales accordingly) and fixed paddle clipping outside the border
