@@ -30,6 +30,12 @@ public class BallWorld extends World {
 		pad.setY(getHeight()-pad.getHeight());
 		add(pad);
 		
+		//brick 
+		Brick b = new Brick();
+		b.setX(40);
+		b.setY(40);
+		add(b);
+		
 		setOnMouseMoved(new EventHandler<MouseEvent>() {
 
 			@Override

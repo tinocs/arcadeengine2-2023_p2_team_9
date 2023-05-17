@@ -47,15 +47,7 @@ public class Ball extends Actor {
 		}
 		//paddle
 		if(getOneIntersectingObject(Paddle.class) != null) {
-			//dy = -dy;
 			Paddle paddle = getOneIntersectingObject(Paddle.class);
-			/*
-			if (getX()+this.getWidth() <= paddle.getX() || getX() >= paddle.getWidth() + paddle.getX()) {
-				dx = -dx;
-			} else {
-				dy = -dy;
-			}
-			*/
 			if (getX()+this.getWidth() <= paddle.getX() || getX() >= paddle.getWidth() + paddle.getX()) {
 				if (getY() <= paddle.getY()+paddle.getHeight() && getY() >= paddle.getY()-paddle.getHeight()) {
 					dx = -dx;
@@ -72,6 +64,37 @@ public class Ball extends Actor {
 				}
 				dy = -dy;
 				double distance = paddle.getX()+paddle.getWidth()/2 - getX();
+				distance = Math.abs(distance);
+				int scaler = 50;
+				if (dy > 0) {
+					dy = 2 - distance/scaler;
+				} else {
+					dy = distance/scaler - 2;
+				}
+				
+				move(0, -5);
+			}
+		}
+		
+//		//brick
+		if(getOneIntersectingObject(Brick.class) != null) {
+			Brick brick = getOneIntersectingObject(Brick.class);
+			if (getX()+this.getWidth() <= brick.getX() || getX() >= brick.getWidth() + brick.getX()) {
+				if (getY() <= brick.getY()+brick.getHeight() && getY() >= brick.getY()-brick.getHeight()) {
+					dx = -dx;
+				}
+			} else {
+				if (getX() <= brick.getX()+brick.getWidth()/2) {
+					if (dx > 0) {
+						dx = -dx;
+					}
+				} else if (getX() > brick.getX()+brick.getWidth()/2) {
+					if (dx < 0) {
+						dx = -dx;
+					}
+				}
+				dy = -dy;
+				double distance = brick.getX()+brick.getWidth()/2 - getX();
 				distance = Math.abs(distance);
 				int scaler = 50;
 				if (dy > 0) {

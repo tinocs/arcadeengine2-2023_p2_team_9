@@ -10,11 +10,20 @@ public class Brick extends Actor {
 	
 	public Brick() {
 		setImage(STAND_LEFT_IMG);
+		getTimer().start();
 	}
 
 	@Override
 	public void act(long now) {
-		
+		collisions();
+	}
+
+	private void collisions() {
+		// TODO Auto-generated method stub
+		if(getOneIntersectingObject(Ball.class) != null) {
+			getWorld().remove(this);
+			getTimer().stop();
+		}
 	}
 
 }
