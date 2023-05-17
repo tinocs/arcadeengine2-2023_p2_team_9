@@ -43,6 +43,10 @@ public class Ball extends Actor {
 			dx = -dx;
 		}
 		if(getY() < 0 || getY() > height-getHeight()) {
+			if( getY() > height-getHeight()) {
+				BallWorld w = (BallWorld)(getWorld());
+				w.getScoreObject().setScoreValue(w.getScoreObject().getScoreValue()-1000);;
+			}
 			dy = -dy;
 		}
 		//paddle
@@ -102,7 +106,8 @@ public class Ball extends Actor {
 				} else {
 					dy = distance/scaler - 2;
 				}
-				
+				BallWorld w = (BallWorld)(getWorld());
+				w.getScoreObject().setScoreValue(w.getScoreObject().getScoreValue()+100);;
 				move(0, -5);
 			}
 		}

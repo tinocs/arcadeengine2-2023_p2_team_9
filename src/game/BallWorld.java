@@ -8,6 +8,7 @@ import javafx.scene.input.MouseEvent;
 public class BallWorld extends World {
 	Ball ball;
 	Paddle pad;
+	Score scoreBoard;
 	public BallWorld() {
 		setPrefSize(500, 500);
 		this.setMaxHeight(500);
@@ -36,6 +37,12 @@ public class BallWorld extends World {
 		b.setY(40);
 		add(b);
 		
+		//scoreboard
+		scoreBoard = new Score();
+		scoreBoard.setX(100);
+		scoreBoard.setY(40);
+		getChildren().add(scoreBoard); 
+		
 		setOnMouseMoved(new EventHandler<MouseEvent>() {
 
 			@Override
@@ -48,4 +55,7 @@ public class BallWorld extends World {
 		});
 	}
 
+	public Score getScoreObject() {
+		return scoreBoard;
+	}
 }
