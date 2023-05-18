@@ -1,15 +1,16 @@
 package engine;
 
 import java.util.ArrayList;
-import java.util.List;	
+import java.util.List;
 
+import javafx.animation.AnimationTimer;
 import javafx.geometry.Bounds;
 import javafx.scene.image.ImageView;
 
 //TODO 
 
 public abstract class Actor extends ImageView {
-
+	public MyTimer timer = new MyTimer();
 	public Actor() {
 		super();
 	}
@@ -48,5 +49,21 @@ public abstract class Actor extends ImageView {
 	public void move(double dx, double dy) {
 		this.setX(this.getX()+dx);
 		this.setY(this.getY()+dy);
+	}
+	public MyTimer getTimer() {
+		return timer;
+	}
+	public class MyTimer extends AnimationTimer {
+		long oldTime = 0;
+		
+		@Override
+		public void handle(long now) {
+			if (now - oldTime >= 0.01 * 1e9) {
+				act(now);
+				oldTime = now;
+			}
+			
+		}
+		
 	}
 }
