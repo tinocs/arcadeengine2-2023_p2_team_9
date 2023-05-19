@@ -20,7 +20,7 @@ import javafx.scene.layout.Pane;
 
 public abstract class World extends Pane {
 	// private fields as listed
-	private Timer timer;
+	private MyTimer timer;
 	private boolean isOn = false;
 	private boolean widthSet = false;
 	private boolean heightSet = false;
@@ -30,7 +30,7 @@ public abstract class World extends Pane {
 	// methods
 	public World() {
 		super();
-		timer = new Timer();
+		timer = new MyTimer();
 		
 		keysPressed = new HashSet<KeyCode>();
 		
@@ -146,6 +146,20 @@ public abstract class World extends Pane {
 			if(newValue != null) {
 				requestFocus();
 			}
+		}
+		
+	}
+	
+	public class MyTimer extends AnimationTimer {
+		long oldTime = 0;
+		
+		@Override
+		public void handle(long now) {
+			if (now - oldTime >= 0.01 * 1e9) {
+				act(now);
+				oldTime = now;
+			}
+			
 		}
 		
 	}
