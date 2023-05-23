@@ -6,6 +6,7 @@ import javafx.scene.Node;
 
 public class MarioWorld extends World {
 	MarioPlayer mario;
+	Goomba goomba;
 	int w = 870;
 	int h = 500;
 	public MarioWorld() {
@@ -32,6 +33,13 @@ public class MarioWorld extends World {
 		mario.setX(40);
 		mario.setY(y - new Brick().getHeight()*4 - mario.getHeight());
 		add(mario);
+		
+		goomba = new Goomba();
+		goomba.setX(800);
+		goomba.setY(300);
+		add(goomba);
+		
+		
 	}
 	
 	public void makeBottomBricks(int x, int y) {
