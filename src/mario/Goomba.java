@@ -15,6 +15,8 @@ public class Goomba extends Actor{
 	int frame = 1;
 	int vel = 0;
 	boolean canJump = false;
+	boolean isDead = false;
+	int deadCounter = 0;
 	//images
 	private static final String IMG_PREFIX = "gameresources/";
 	private static final Image IMG = new Image(IMG_PREFIX+"tempPlayer.png");
@@ -28,15 +30,31 @@ public class Goomba extends Actor{
 	
 	@Override
 	public void act(long now) {
-		// TODO Auto-generated method stub
-		gravity();
-		move(speed,0);
-		if(frame % 20 == 0) {
-			setImage(goomba2);
-		}else if(frame % 10 == 0){
-			setImage(goomba1);
+		if (this.getOneIntersectingObject(MarioPlayer.class) != null) {
+			MarioPlayer m = getOneIntersectingObject(MarioPlayer.class);
+			if (m.getY() < getY() - m.getHeight()/2) {
+				System.out.println("squish");
+				setImage(goombaSquish);
+				isDead = true;
+			}
 		}
-		frame++;
+		
+		if (!isDead) {
+			gravity();
+			move(speed,0);
+			if(frame % 20 == 0) {
+				setImage(goomba2);
+			}else if(frame % 10 == 0){
+				setImage(goomba1);
+			}
+			frame++;
+		} else {
+			deadCounter++;
+			if (deadCounter == 50) {
+				
+				getWorld().remove(this);
+			}
+		}
 	}
 	private void gravity() {
 		// TODO Auto-generated method stub

@@ -99,6 +99,7 @@ public abstract class World extends Pane {
 	}
 	
 	public void remove(Actor actor) {
+		actor.getTimer().stop();
 		this.getChildren().remove(actor);
 	}
 	public void start() {
