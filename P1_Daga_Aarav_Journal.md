@@ -23,7 +23,7 @@ added/fixed World.java's act() method
 fixed marios jumping mechanism
 
 ** 5/23/23** (1 hour) 
--  mario now walks normally, animation works
+- mario now walks normally, animation works
 - world now moves as mario moves
 - added some getter methods in MarioPlayer.java
 - added moveAll method which moves every object other than mario in the world class.
