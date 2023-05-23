@@ -10,3 +10,5 @@ Updated and fixed the world class to fit the issues
 **previous logs are in breakout branch**
 patched up brick image and its placement in the world. added gravity and jump to mario class. Need to work on adjusting the brick-mario collision.
 
+**5/22/2023 - home (60 min)**
+added sprite images. tried to make a animation method. Not much done today
