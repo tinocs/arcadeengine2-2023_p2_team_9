@@ -37,7 +37,6 @@ public class MarioPlayer extends Actor{
 		if(getWorld().isKeyPressed(KeyCode.UP) || getWorld().isKeyPressed(KeyCode.W)) {
 			jump();
 		}
-		
 	}
 	private void gravity() {
 		vel+=1;
@@ -46,16 +45,16 @@ public class MarioPlayer extends Actor{
 		// TODO Auto-generated method stub
 		if(getOneIntersectingObject(Brick.class) == null) {
 			canJump = false;
-		}else {
+		} else {
 			Brick touch = getOneIntersectingObject(Brick.class);
 			setY(touch.getY() - getHeight());
 			canJump = true;
+			vel = 0;
 		}
 	}
 	private void jump() {
 		// TODO Auto-generated method stub
 		if(canJump) {
-			System.out.println("jumps");
 			vel = -25;
 		}
 	}
