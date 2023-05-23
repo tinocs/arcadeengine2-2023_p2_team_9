@@ -40,13 +40,13 @@ public class MarioPlayer extends Actor{
 		
 	}
 	private void gravity() {
-		vel+=1;
-		move(0,vel);
-		
 		// TODO Auto-generated method stub
 		if(getOneIntersectingObject(Brick.class) == null) {
 			canJump = false;
+			vel+=1;
+			move(0,vel);
 		}else {
+			vel = 0;
 			Brick touch = getOneIntersectingObject(Brick.class);
 			setY(touch.getY() - getHeight());
 			canJump = true;
@@ -57,6 +57,7 @@ public class MarioPlayer extends Actor{
 		if(canJump) {
 			System.out.println("jumps");
 			vel = -25;
+			setY(getY() - .5);
 		}
 	}
 }
