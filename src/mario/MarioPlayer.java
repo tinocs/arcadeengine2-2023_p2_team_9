@@ -40,16 +40,12 @@ public class MarioPlayer extends Actor{
 	}
 	private void gravity() {
 		// TODO Auto-generated method stub
+		vel+=1;
+		move(0,vel);
 		if(getOneIntersectingObject(Brick.class) == null) {
 			canJump = false;
-<<<<<<< HEAD
-		} else {
-=======
-			vel+=1;
-			move(0,vel);
 		}else {
 			vel = 0;
->>>>>>> bd240e4ec65308ba288345e5316df72f7a0ff668
 			Brick touch = getOneIntersectingObject(Brick.class);
 			setY(touch.getY() - getHeight());
 			canJump = true;
