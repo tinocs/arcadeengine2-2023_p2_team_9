@@ -43,6 +43,26 @@ public abstract class Actor extends ImageView {
 		}
 		return temp.get(0);
 	}
+	public <A extends Actor> List<A> getObjectsAtOffset(int dx, int dy, Class cls) {
+		double centerX = getX() + getWidth()/2;
+		double centerY = getY() + getHeight()/2;
+		
+		List<Actor> obj = getWorld().getObjects(cls);
+		List<A> intObj = new ArrayList<A>();
+		for (Actor a : obj) {
+			if (a.getBoundsInParent().contains(centerX+dx, centerY+dy) && a != this) {
+				intObj.add((A) a);
+			}
+		}
+		return intObj;
+	}
+	public <A extends Actor> A getOneObjectAtOffset(int dx, int dy, Class<A> cls) {
+		List<A> temp  = getObjectsAtOffset(dx, dy, cls);
+		if(temp.size() <= 0) {
+			return null;
+		}
+		return temp.get(0);
+	}
 	public World getWorld() {
 		return (World) getParent();
 	}

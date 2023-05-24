@@ -30,8 +30,8 @@ public class MarioWorld extends World {
 		start();
 		int x = 0;
 		int y = (int) (getHeight()-new Brick().getHeight());
-		makeBottomBricks(x, y);
-		
+		makeBricks(x, y, 4, 100);
+		makeBricks(100, 350, 1, 10);
 		mario = new MarioPlayer();
 		mario.setX(40);
 		mario.setY(y - new Brick().getHeight()*4 - mario.getHeight());
@@ -45,18 +45,19 @@ public class MarioWorld extends World {
 		
 	}
 	
-	public void makeBottomBricks(int x, int y) {
-		for (int j = 0; j < 4; j++) {
-			for (int i = 0; i < 100; i++) {
+	public void makeBricks(int x, int y, int height, int amt) {
+		for (int j = 0; j < height; j++) {
+			for (int i = 0; i < amt; i++) {
 				Brick b = new Brick();
 				b.setX(x);
-				b.setY(y+2*j);
+				b.setY(y);
 				add(b);
 				x+= b.getWidth();
 			}
 			y -= new Brick().getHeight();
 			x = 0;
 		}
+		System.out.println(y);
 	}
 	
 	public void moveAll(int xDir, int yDir) {

@@ -32,25 +32,27 @@ public class MarioPlayer extends Actor{
 	    private static final Image runL2 = new Image(IMG_PREFIX +"runL2.png", 20, 30, false, false);
 	    private static final Image runL3 = new Image(IMG_PREFIX +"runL3.png", 20, 30, false, false);
 	    private static final Image stand2 = new Image(IMG_PREFIX +"stand2.png", 20, 30, false, false);
-	    
+	    //private static final Image dot = new Image(IMG_PREFIX +"tempPlayer.png", 2, 2, false, false);
     
     public MarioPlayer() {
     	setImage(stand1);
     	getTimer().start();
     	speed = 4;
+    	
     }
 	@Override
 	public void act(long now) {
 		// TODO Auto-generated method stub
 		gravity();
 		controls();
+		
 	}
 	
 	private void controls() {
 		
 		 if((getWorld().isKeyPressed(KeyCode.UP) || getWorld().isKeyPressed(KeyCode.W)) && getOneIntersectingObject(Brick.class) != null) {
 				jump();
-		 } else if ((getWorld().isKeyPressed(KeyCode.LEFT) || getWorld().isKeyPressed(KeyCode.A)) ) {
+		 } else if ((getWorld().isKeyPressed(KeyCode.LEFT) || getWorld().isKeyPressed(KeyCode.A) && getOneObjectAtOffset((int)-getWidth()/2, 0, Brick.class) == null) ) {
 			if (getX() >= ((MarioWorld)getWorld()).playerLOffset) 
 				move(-speed,0);
 			if(frame % 6 == 0) {
@@ -62,7 +64,7 @@ public class MarioPlayer extends Actor{
 			}
 			frame++;
 			isRight = false;
-		} else if ((getWorld().isKeyPressed(KeyCode.RIGHT) || getWorld().isKeyPressed(KeyCode.D))) {
+		} else if ((getWorld().isKeyPressed(KeyCode.RIGHT) || getWorld().isKeyPressed(KeyCode.D)) && getOneObjectAtOffset((int)getWidth()/2, 0, Brick.class) == null) {
 			if (getX() <= getWorld().getWidth() - ((MarioWorld)getWorld()).playerROffset)
 				move(speed,0);
 			if(frame % 6 == 0) {

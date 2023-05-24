@@ -11,7 +11,7 @@ import engine.Actor;
 import javafx.scene.image.Image;
 
 public class Goomba extends Actor{
-	private static final int speed = -1;
+	private static int speed = -1;
 	int frame = 1;
 	int vel = 0;
 	boolean canJump = false;
@@ -33,12 +33,13 @@ public class Goomba extends Actor{
 		if (this.getOneIntersectingObject(MarioPlayer.class) != null) {
 			MarioPlayer m = getOneIntersectingObject(MarioPlayer.class);
 			if (m.getY() < getY() - m.getHeight()/2) {
-				System.out.println("squish");
 				setImage(goombaSquish);
 				isDead = true;
 			}
 		}
-		
+		if (getOneObjectAtOffset((int)-getWidth()/2, 0, Brick.class) != null) {
+			speed = -speed;
+		}
 		if (!isDead) {
 			gravity();
 			move(speed,0);

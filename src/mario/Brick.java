@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
 
 public class Brick extends Actor {
 	private static final String IMG_PREFIX = "gameresources/";
-    private static final Image IMG = new Image(IMG_PREFIX +"brick.png");
+    private static final Image IMG = new Image(IMG_PREFIX +"brick.png", 30, 30, false, false);
 	public Brick() {
 		setImage(IMG);
 	}
