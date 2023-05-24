@@ -51,6 +51,7 @@ public class Goomba extends Enemy {
 		if (this.getOneIntersectingObject(MarioPlayer.class) != null) {
 			MarioPlayer m = getOneIntersectingObject(MarioPlayer.class);
 			if (m.getY() < getY() - m.getHeight()/2) {
+				move(0, getHeight()/3);
 				setImage(goombaSquish);
 				isDead = true;
 			}
