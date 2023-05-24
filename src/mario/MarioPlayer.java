@@ -49,32 +49,21 @@ public class MarioPlayer extends Actor{
 	}
 	
 	private void controls() {
-		
-		 if((getWorld().isKeyPressed(KeyCode.UP) || getWorld().isKeyPressed(KeyCode.W)) && getOneIntersectingObject(Brick.class) != null) {
+		 if (this.getOneObjectAtOffset(0, (int)-getHeight()/2, Brick.class) != null) {
+			 this.getOneObjectAtOffset(0, (int)-getHeight()/2, Brick.class).killSwitch();
+			 vel = 0;
+		 } else if((getWorld().isKeyPressed(KeyCode.UP) || getWorld().isKeyPressed(KeyCode.W)) && getOneIntersectingObject(Brick.class) != null) {
 				jump();
-		 } else if ((getWorld().isKeyPressed(KeyCode.LEFT) || getWorld().isKeyPressed(KeyCode.A) && getOneObjectAtOffset((int)-getWidth()/2, 0, Brick.class) == null) ) {
+		 }
+		 if ((getWorld().isKeyPressed(KeyCode.LEFT) || getWorld().isKeyPressed(KeyCode.A)) && getOneObjectAtOffset(-(int)getWidth()/2, 0, Brick.class) == null) {
 			if (getX() >= ((MarioWorld)getWorld()).playerLOffset) 
 				move(-speed,0);
-			if(frame % 6 == 0) {
-				setImage(runL1);
-			}else if(frame % 4 == 0) {
-				setImage(runL2);
-			}else if (frame % 2 == 0){
-				setImage(runL3);
-			}
-			frame++;
+			frame();
 			isRight = false;
 		} else if ((getWorld().isKeyPressed(KeyCode.RIGHT) || getWorld().isKeyPressed(KeyCode.D)) && getOneObjectAtOffset((int)getWidth()/2, 0, Brick.class) == null) {
 			if (getX() <= getWorld().getWidth() - ((MarioWorld)getWorld()).playerROffset)
 				move(speed,0);
-			if(frame % 6 == 0) {
-				setImage(runR1);
-			}else if(frame % 4 == 0) {
-				setImage(runR2);
-			}else if (frame % 2 == 0){
-				setImage(runR3);
-			}
-			frame++;
+			frame();
 			isRight = true;
 			//System.out.println("dan");
 		} else {
@@ -85,6 +74,7 @@ public class MarioPlayer extends Actor{
 			}
 			//frame = 1;
 		}
+		
 	}
 	public boolean isGoingRight() {
 		return (getWorld().isKeyPressed(KeyCode.RIGHT) || getWorld().isKeyPressed(KeyCode.D));
@@ -95,15 +85,35 @@ public class MarioPlayer extends Actor{
 	public double getSpeed() {
 		return speed;
 	}
+	private void frame() {
+		if (isRight) {
+			if(frame % 6 == 0) {
+				setImage(runR1);
+			}else if(frame % 4 == 0) {
+				setImage(runR2);
+			}else if (frame % 2 == 0){
+				setImage(runR3);
+			}
+		} else {
+			if(frame % 6 == 0) {
+				setImage(runL1);
+			}else if(frame % 4 == 0) {
+				setImage(runL2);
+			}else if (frame % 2 == 0){
+				setImage(runL3);
+			}
+		}
+		frame++;
+	}
 	private void gravity() {
 		// TODO Auto-generated method stub
 		vel+=1;
 		move(0,vel);
-		if(getOneIntersectingObject(Brick.class) == null) {
+		if(this.getOneObjectAtOffset(0, (int)getHeight()/2, Brick.class) == null) {
 			canJump = false;
 		}else {
 			vel = 0;
-			Brick touch = getOneIntersectingObject(Brick.class);
+			Brick touch = getOneObjectAtOffset(0, (int)getHeight()/2, Brick.class);
 			setY(touch.getY() - getHeight());
 			canJump = true;
 			vel = 0;

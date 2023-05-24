@@ -13,7 +13,6 @@ public class MarioWorld extends World {
 	public int playerROffset = 500;
 	public MarioWorld() {
 		setPrefSize(w, h);
-		System.out.println(new Brick().getWidth() + ", " + new Brick().getHeight());
 	}
 
 	@Override
@@ -31,7 +30,8 @@ public class MarioWorld extends World {
 		int x = 0;
 		int y = (int) (getHeight()-new Brick().getHeight());
 		makeBricks(x, y, 4, 100);
-		makeBricks(100, 350, 1, 10);
+		makeBricks(200, 350, 1, 10);
+		makeBricks(100, 250, 1, 10);
 		mario = new MarioPlayer();
 		mario.setX(40);
 		mario.setY(y - new Brick().getHeight()*4 - mario.getHeight());
@@ -57,7 +57,6 @@ public class MarioWorld extends World {
 			y -= new Brick().getHeight();
 			x = 0;
 		}
-		System.out.println(y);
 	}
 	
 	public void moveAll(int xDir, int yDir) {

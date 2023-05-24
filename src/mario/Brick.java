@@ -2,6 +2,7 @@ package mario;
 
 import engine.Actor;
 import javafx.scene.image.Image;
+import tests.Player;
 
 public class Brick extends Actor {
 	private static final String IMG_PREFIX = "gameresources/";
@@ -14,5 +15,7 @@ public class Brick extends Actor {
 	public void act(long now) {
 		
 	}
-
+	public void killSwitch() {
+		getWorld().remove(this);
+	}
 }
