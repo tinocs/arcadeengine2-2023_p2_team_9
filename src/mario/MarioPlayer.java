@@ -51,7 +51,7 @@ public class MarioPlayer extends Actor{
 		 if((getWorld().isKeyPressed(KeyCode.UP) || getWorld().isKeyPressed(KeyCode.W)) && getOneIntersectingObject(Brick.class) != null) {
 				jump();
 		 } else if ((getWorld().isKeyPressed(KeyCode.LEFT) || getWorld().isKeyPressed(KeyCode.A)) ) {
-			if (getX() > 100) 
+			if (getX() >= ((MarioWorld)getWorld()).playerLOffset) 
 				move(-speed,0);
 			if(frame % 6 == 0) {
 				setImage(runL1);
@@ -63,7 +63,7 @@ public class MarioPlayer extends Actor{
 			frame++;
 			isRight = false;
 		} else if ((getWorld().isKeyPressed(KeyCode.RIGHT) || getWorld().isKeyPressed(KeyCode.D))) {
-			if (getX() < getWorld().getWidth() - 100)
+			if (getX() <= getWorld().getWidth() - ((MarioWorld)getWorld()).playerROffset)
 				move(speed,0);
 			if(frame % 6 == 0) {
 				setImage(runR1);

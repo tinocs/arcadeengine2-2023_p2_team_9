@@ -9,15 +9,17 @@ public class MarioWorld extends World {
 	Goomba goomba;
 	int w = 870;
 	int h = 500;
+	public int playerLOffset = 300;
+	public int playerROffset = 500;
 	public MarioWorld() {
 		setPrefSize(w, h);
 	}
 
 	@Override
 	public void act(long now) {
-		if (mario.getX() > w - 150 && mario.isGoingRight()) {
+		if (mario.getX() > w - playerROffset && mario.isGoingRight()) {
 			moveAll((int)-mario.getSpeed(), 0);
-		} else if (mario.getX() < 150 && mario.isGoingLeft()) {
+		} else if (mario.getX() < playerLOffset && mario.isGoingLeft()) {
 			moveAll((int)mario.getSpeed(), 0);
 		}
 	}
