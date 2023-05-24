@@ -13,6 +13,7 @@ public class MarioWorld extends World {
 	public int playerROffset = 500;
 	public MarioWorld() {
 		setPrefSize(w, h);
+		System.out.println(new Brick().getWidth() + ", " + new Brick().getHeight());
 	}
 
 	@Override
