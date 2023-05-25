@@ -7,10 +7,12 @@ import tests.Player;
 public class Brick extends Actor {
 	private static final String IMG_PREFIX = "gameresources/";
     private static final Image IMG = new Image(IMG_PREFIX +"brick.png", 30, 30, false, false);
-    private static boolean unbreakable;
+    private boolean unbreakable;
 	public Brick(boolean unb) {
 		setImage(IMG);
+		System.out.println("unb = " + unb);
 		unbreakable = unb;
+		System.out.println("unbreakable = " + unbreakable);
 	}
 
 	@Override
@@ -18,6 +20,7 @@ public class Brick extends Actor {
 		
 	}
 	public void killSwitch() {
+		System.out.println("killed: " + unbreakable);
 		if (unbreakable) {
 			System.out.println("added");
 			UnbreakaBlock unb = new UnbreakaBlock();
