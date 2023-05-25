@@ -50,17 +50,18 @@ public class MarioPlayer extends Actor{
 	
 	private void controls() {
 		 if (this.getOneObjectAtOffset(0, (int)-getHeight()/2, Brick.class) != null) {
-			 this.getOneObjectAtOffset(0, (int)-getHeight()/2, Brick.class).killSwitch();
-			 vel = 0;
+			 System.out.println("??");
+			 //this.getOneObjectAtOffset(0, (int)-getHeight()/2, Brick.class).killSwitch();
+			 //vel = 0;
 		 } else if((getWorld().isKeyPressed(KeyCode.UP) || getWorld().isKeyPressed(KeyCode.W)) && getOneIntersectingObject(Brick.class) != null) {
 				jump();
-		 }
-		 if ((getWorld().isKeyPressed(KeyCode.LEFT) || getWorld().isKeyPressed(KeyCode.A)) && getOneObjectAtOffset(-(int)getWidth()/2, 0, Brick.class) == null) {
+		 } else if ((getWorld().isKeyPressed(KeyCode.LEFT) || getWorld().isKeyPressed(KeyCode.A)) && getOneObjectAtOffset(-(int)getWidth()/2, 0, Brick.class) == null) {
 			if (getX() >= ((MarioWorld)getWorld()).playerLOffset) 
 				move(-speed,0);
 			frame();
 			isRight = false;
 		} else if ((getWorld().isKeyPressed(KeyCode.RIGHT) || getWorld().isKeyPressed(KeyCode.D)) && getOneObjectAtOffset((int)getWidth()/2, 0, Brick.class) == null) {
+			System.out.println("?");
 			if (getX() <= getWorld().getWidth() - ((MarioWorld)getWorld()).playerROffset)
 				move(speed,0);
 			frame();

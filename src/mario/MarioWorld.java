@@ -28,13 +28,13 @@ public class MarioWorld extends World {
 	public void onDimensionsInitialized() {
 		start();
 		int x = 0;
-		int y = (int) (getHeight()-new Brick().getHeight());
-		makeBricks(x, y, 4, 100);
-		makeBricks(200, 350, 1, 10);
-		makeBricks(100, 250, 1, 10);
+		int y = (int) (getHeight()-new Brick(false).getHeight());
+		makeBricks(x, y, 4, 100, false);
+		makeBricks(200, 350, 1, 10, false);
+		makeBricks(100, 250, 1, 10, true);
 		mario = new MarioPlayer();
 		mario.setX(40);
-		mario.setY(y - new Brick().getHeight()*4 - mario.getHeight());
+		mario.setY(y - new Brick(false).getHeight()*4 - mario.getHeight());
 		add(mario);
 		
 		goomba = new Goomba();
@@ -45,16 +45,16 @@ public class MarioWorld extends World {
 		
 	}
 	
-	public void makeBricks(int x, int y, int height, int amt) {
+	public void makeBricks(int x, int y, int height, int amt, boolean unb) {
 		for (int j = 0; j < height; j++) {
 			for (int i = 0; i < amt; i++) {
-				Brick b = new Brick();
+				Brick b = new Brick(unb);
 				b.setX(x);
 				b.setY(y);
 				add(b);
 				x+= b.getWidth();
 			}
-			y -= new Brick().getHeight();
+			y -= new Brick(unb).getHeight();
 			x = 0;
 		}
 	}
