@@ -17,9 +17,9 @@ public class MarioWorld extends World {
 
 	@Override
 	public void act(long now) {
-		if (mario.getX() > w - playerROffset && mario.isGoingRight()) {
+		if (mario.getX() > w - playerROffset && mario.isGoingRight() && !mario.blockOnRight()) {
 			moveAll((int)-mario.getSpeed(), 0);
-		} else if (mario.getX() < playerLOffset && mario.isGoingLeft()) {
+		} else if (mario.getX() < playerLOffset && mario.isGoingLeft() && !mario.blockOnLeft()) {
 			moveAll((int)mario.getSpeed(), 0);
 		}
 	}

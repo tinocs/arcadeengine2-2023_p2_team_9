@@ -49,32 +49,29 @@ public class MarioPlayer extends Actor{
 	}
 	
 	private void controls() {
-		 if (this.getOneObjectAtOffset(0, (int)-getHeight()/2, Brick.class) != null) {
-			 this.getOneObjectAtOffset(0, (int)-getHeight()/2, Brick.class).killSwitch();
+		 if (blockOnTop() && !blockOnBottom()) {
+			 if (this.getOneObjectAtOffset((int)-getWidth()/2, (int)-getHeight()/2, Block.class) != null) {
+				 this.getOneObjectAtOffset((int)-getWidth()/2, (int)-getHeight()/2, Block.class).killSwitch();
+			 } else {
+				 this.getOneObjectAtOffset((int)getWidth()/2, (int)-getHeight()/2, Block.class).killSwitch();
+			 }
 			 vel = 0;
 			 move(0, 5);
-		 } if (this.getOneObjectAtOffset(0, (int)-getHeight()/2, UnbreakaBlock.class) != null) {
-			 vel = 0;
-			 move(0, 5);
-		 }else if((getWorld().isKeyPressed(KeyCode.UP) || getWorld().isKeyPressed(KeyCode.W)) && getOneIntersectingObject(Brick.class) != null) {
+		 }else if((getWorld().isKeyPressed(KeyCode.UP) || getWorld().isKeyPressed(KeyCode.W)) && blockOnBottom()) {
 				jump();
-		 } else if ((getWorld().isKeyPressed(KeyCode.LEFT) || getWorld().isKeyPressed(KeyCode.A)) && getOneObjectAtOffset(-(int)getWidth()/2, 0, Brick.class) == null) {
+		 } else if ((getWorld().isKeyPressed(KeyCode.LEFT) || getWorld().isKeyPressed(KeyCode.A)) && !blockOnLeft()) {
 			if (getX() >= ((MarioWorld)getWorld()).playerLOffset) {
 				move(-speed,0);
-				//System.out.println("l moving");
 			}
-			//System.out.println("l moving 2");
+			
 			frame();
 			isRight = false;
-		} else if ((getWorld().isKeyPressed(KeyCode.RIGHT) || getWorld().isKeyPressed(KeyCode.D)) && getOneObjectAtOffset((int)getWidth()/2, 0, Brick.class) == null) {
+		} else if ((getWorld().isKeyPressed(KeyCode.RIGHT) || getWorld().isKeyPressed(KeyCode.D)) && !blockOnRight()) {
 			if (getX() <= getWorld().getWidth() - ((MarioWorld)getWorld()).playerROffset) {
 				move(speed,0);
-				//System.out.println("r moving");
 			}
-		 	//System.out.println("r moving 2");
 			frame();
 			isRight = true;
-			//System.out.println("dan");
 		} else {
 			if (isRight) {
 				setImage(stand1);
@@ -84,6 +81,18 @@ public class MarioPlayer extends Actor{
 			//frame = 1;
 		}
 		
+	}
+	public boolean blockOnTop() {
+		return this.getOneObjectAtOffset(-(int)getWidth()/2, (int)-getHeight()/2, Block.class) != null || this.getOneObjectAtOffset((int)getWidth()/2, (int)-getHeight()/2, Block.class) != null;
+	}
+	public boolean blockOnBottom() {
+		return this.getOneObjectAtOffset(-(int)getWidth()/2, (int)getHeight()/2, Block.class) != null || this.getOneObjectAtOffset((int)getWidth()/2, (int)getHeight()/2, Block.class) != null;
+	}
+	public boolean blockOnLeft() {
+		return this.getOneObjectAtOffset(-(int)getWidth()/2, (int)getHeight()/2, Block.class) != null && this.getOneObjectAtOffset(-(int)getWidth()/2, -(int)getHeight()/2, Block.class) != null;
+	}
+	public boolean blockOnRight() {
+		return this.getOneObjectAtOffset((int)getWidth()/2, (int)getHeight()/2, Block.class) != null && this.getOneObjectAtOffset((int)getWidth()/2, -(int)getHeight()/2, Block.class) != null;
 	}
 	public boolean isGoingRight() {
 		return (getWorld().isKeyPressed(KeyCode.RIGHT) || getWorld().isKeyPressed(KeyCode.D));
@@ -118,11 +127,11 @@ public class MarioPlayer extends Actor{
 		// TODO Auto-generated method stub
 		vel+=1;
 		move(0,vel);
-		if(this.getOneObjectAtOffset(0, (int)getHeight()/2, Brick.class) == null) {
+		if(this.getOneObjectAtOffset(0, (int)getHeight()/2, Block.class) == null) {
 			canJump = false;
 		}else {
 			vel = 0;
-			Brick touch = getOneObjectAtOffset(0, (int)getHeight()/2, Brick.class);
+			Block touch = getOneObjectAtOffset(0, (int)getHeight()/2, Block.class);
 			setY(touch.getY() - getHeight());
 			canJump = true;
 			vel = 0;
