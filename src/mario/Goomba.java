@@ -26,11 +26,12 @@ public class Goomba extends Enemy {
 	
 	@Override
 	public void act(long now) {
+		gravity();
 		playerInteraction();
 		detectWalls();
 		
 		if (!isDead) {
-			gravity();
+			
 			move(speed,0);
 			if(frame % 20 == 0) {
 				setImage(goomba2);
