@@ -41,8 +41,6 @@ public class MarioWorld extends World {
 		goomba.setX(800);
 		goomba.setY(300);
 		add(goomba);
-		
-		
 	}
 	
 	public void makeBricks(int x, int y, int height, int amt, boolean unb) {
