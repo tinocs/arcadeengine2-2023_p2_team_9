@@ -1,10 +1,8 @@
 package mario;
 
-import engine.Actor;
 import javafx.scene.image.Image;
-import tests.Player;
 
-public class Brick extends Actor {
+public class Brick extends Block {
 	private static final String IMG_PREFIX = "gameresources/";
     private static final Image IMG = new Image(IMG_PREFIX +"brick.png", 30, 30, false, false);
     private boolean unbreakable;
@@ -17,6 +15,7 @@ public class Brick extends Actor {
 	public void act(long now) {
 		
 	}
+	@Override
 	public void killSwitch() {
 		if (unbreakable) {
 			UnbreakaBlock unb = new UnbreakaBlock();
