@@ -10,9 +10,7 @@ public class Brick extends Actor {
     private boolean unbreakable;
 	public Brick(boolean unb) {
 		setImage(IMG);
-		System.out.println("unb = " + unb);
 		unbreakable = unb;
-		System.out.println("unbreakable = " + unbreakable);
 	}
 
 	@Override
@@ -20,9 +18,7 @@ public class Brick extends Actor {
 		
 	}
 	public void killSwitch() {
-		System.out.println("killed: " + unbreakable);
 		if (unbreakable) {
-			System.out.println("added");
 			UnbreakaBlock unb = new UnbreakaBlock();
 			unb.setX(getX());
 			unb.setY(getY());

@@ -59,14 +59,19 @@ public class MarioPlayer extends Actor{
 		 }else if((getWorld().isKeyPressed(KeyCode.UP) || getWorld().isKeyPressed(KeyCode.W)) && getOneIntersectingObject(Brick.class) != null) {
 				jump();
 		 } else if ((getWorld().isKeyPressed(KeyCode.LEFT) || getWorld().isKeyPressed(KeyCode.A)) && getOneObjectAtOffset(-(int)getWidth()/2, 0, Brick.class) == null) {
-			if (getX() >= ((MarioWorld)getWorld()).playerLOffset) 
+			if (getX() >= ((MarioWorld)getWorld()).playerLOffset) {
 				move(-speed,0);
+				//System.out.println("l moving");
+			}
+			//System.out.println("l moving 2");
 			frame();
 			isRight = false;
 		} else if ((getWorld().isKeyPressed(KeyCode.RIGHT) || getWorld().isKeyPressed(KeyCode.D)) && getOneObjectAtOffset((int)getWidth()/2, 0, Brick.class) == null) {
-			//System.out.println("?");
-			if (getX() <= getWorld().getWidth() - ((MarioWorld)getWorld()).playerROffset)
+			if (getX() <= getWorld().getWidth() - ((MarioWorld)getWorld()).playerROffset) {
 				move(speed,0);
+				//System.out.println("r moving");
+			}
+		 	//System.out.println("r moving 2");
 			frame();
 			isRight = true;
 			//System.out.println("dan");
