@@ -12,3 +12,19 @@ patched up brick image and its placement in the world. added gravity and jump to
 
 **5/22/2023 - home (60 min)**
 added sprite images. tried to make a animation method. Not much done today
+
++added sprite images. tried to make a animation method. Not much done today
+
+**LOST LOGS IN 5/23/2023 DUE TO GIT PROBLEM**
+**5/23/2023 - school (90 min)**
+added the goomba class, grabbed the spite sheet and split, then cut them to the right size. Uploaded the images and started on the goomba class.
+
+**5/23/2023 - home (10 min)**
+Added gravity and other player movement to the goomba. 
+
+**5/26/2023 - school (90 min)**
+made the dead goomba stay in the air rather than float in the air. Spit anc cut spirte sheet Made the pipe class which displays a pipe facing up. Acts just like brick with collisions. 
+
+**5/26/2023 - home (20 min)**
+Added collision with pipe in enemy class to help goomba collision. Adding this to enemy super class makes collsions with other enemies more streamlined.
+
