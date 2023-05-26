@@ -3,8 +3,8 @@
 ## Super Mario Bros (1985) ##
 
 **Team Members**
-Aarav Daga
-Aryan Ajit
+Aarav Daga,
+Aryan Ajit,
 Ishaan Mahendrakar
 
 **Group Number:** 9
@@ -52,4 +52,6 @@ Your teacher can add comments and suggestions here
 
 ## Class Design and Brainstorm ##
 
-Put all your brainstorm ideas, strategy approaches, and class outlines here
++ Grab sprites from this site: https://www.mariouniverse.com/sprites-nes-smb/
++ Creat super class for enemys and blocks. This way we dont have to repeat a lot of code
++ Create a getObjectAtOffeset for border controls
