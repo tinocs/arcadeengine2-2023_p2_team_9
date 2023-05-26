@@ -58,7 +58,7 @@ public class MarioPlayer extends Actor{
 			 vel = 0;
 			 move(0, 5);
 		 }else if((getWorld().isKeyPressed(KeyCode.UP) || getWorld().isKeyPressed(KeyCode.W)) && blockOnBottom()) {
-				jump();
+				jump(-15);
 		 } else if ((getWorld().isKeyPressed(KeyCode.LEFT) || getWorld().isKeyPressed(KeyCode.A)) && !blockOnLeft()) {
 			if (getX() >= ((MarioWorld)getWorld()).playerLOffset) {
 				move(-speed,0);
@@ -137,11 +137,11 @@ public class MarioPlayer extends Actor{
 			vel = 0;
 		}
 	}
-	private void jump() {
+	public void jump(int vel) {
 		// TODO Auto-generated method stub
 		if(canJump) {
-			vel = -15;
-			setY(getY() - .5);
+			this.vel = vel;
+			setY(getY() - 1);
 		}
 	}
 }
