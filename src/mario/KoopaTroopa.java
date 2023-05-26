@@ -77,7 +77,7 @@ public class KoopaTroopa extends Enemy {
 				}
 			}
 		} else if (zoomMode) {
-			move(speed, 0);
+			move(3*speed, 0);
 			shellWall();
 			if (playerOnTop() && speed != 0) {
 				speed = 0;
@@ -95,6 +95,11 @@ public class KoopaTroopa extends Enemy {
 	}
 	private void shellWall() {
 		if (getOneObjectAtOffset((int)-getWidth()/2, 0, Block.class) != null || getOneObjectAtOffset((int)getWidth()/2, 0, Block.class) != null) {
+			if (getOneObjectAtOffset((int)-getWidth()/2, 0, Block.class) != null) {
+				getOneObjectAtOffset((int)-getWidth()/2, 0, Block.class).killSwitch();
+			} else {
+				getOneObjectAtOffset((int)getWidth()/2, 0, Block.class).killSwitch();
+			}
 			speed = -speed;
 			move(3*speed,0);
 		}

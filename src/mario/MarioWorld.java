@@ -30,7 +30,7 @@ public class MarioWorld extends World {
 		int y = (int) (getHeight()-new Brick(false).getHeight());
 		makeBricks(x, y, 4, 100, false);
 		makeBricks(200, 350, 1, 2, true);
-		makeBricks(500, 350, 1, 2, true);
+		makeBricks(500, 350, 1, 2, false);
 		//makeBricks(100, 250, 1, 10, true);
 		mario = new MarioPlayer();
 		mario.setX(40);
