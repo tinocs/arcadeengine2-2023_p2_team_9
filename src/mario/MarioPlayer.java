@@ -83,16 +83,16 @@ public class MarioPlayer extends Actor{
 		
 	}
 	public boolean blockOnTop() {
-		return this.getOneObjectAtOffset(-(int)getWidth()/2, (int)-getHeight()/2, Block.class) != null || this.getOneObjectAtOffset((int)getWidth()/2, (int)-getHeight()/2, Block.class) != null;
+		return (this.getOneObjectAtOffset(-(int)getWidth()/2, (int)-getHeight()/2, Block.class) != null || this.getOneObjectAtOffset((int)getWidth()/2, (int)-getHeight()/2, Block.class) != null);
 	}
 	public boolean blockOnBottom() {
 		return this.getOneObjectAtOffset(-(int)getWidth()/2, (int)getHeight()/2, Block.class) != null || this.getOneObjectAtOffset((int)getWidth()/2, (int)getHeight()/2, Block.class) != null;
 	}
 	public boolean blockOnLeft() {
-		return this.getOneObjectAtOffset(-(int)getWidth()/2, (int)getHeight()/2, Block.class) != null && this.getOneObjectAtOffset(-(int)getWidth()/2, -(int)getHeight()/2, Block.class) != null;
+		return (this.getOneObjectAtOffset(-(int)getWidth()/2, (int)getHeight()/2, Block.class) != null || this.getOneObjectAtOffset(-(int)getWidth()/2, -(int)getHeight()/2, Block.class) != null)  && this.getOneObjectAtOffset(-(int)getWidth()/2, 0, Block.class) != null;
 	}
 	public boolean blockOnRight() {
-		return this.getOneObjectAtOffset((int)getWidth()/2, (int)getHeight()/2, Block.class) != null && this.getOneObjectAtOffset((int)getWidth()/2, -(int)getHeight()/2, Block.class) != null;
+		return (this.getOneObjectAtOffset((int)getWidth()/2, (int)getHeight()/2, Block.class) != null || this.getOneObjectAtOffset((int)getWidth()/2, -(int)getHeight()/2, Block.class) != null) && this.getOneObjectAtOffset((int)getWidth()/2, 0, Block.class) != null;
 	}
 	public boolean isGoingRight() {
 		return (getWorld().isKeyPressed(KeyCode.RIGHT) || getWorld().isKeyPressed(KeyCode.D));

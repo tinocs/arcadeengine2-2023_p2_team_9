@@ -15,5 +15,16 @@ public class QuestionBlock extends Block {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	@Override
+	public void killSwitch() {
+		
+		UnbreakaBlock unb = new UnbreakaBlock();
+		unb.setX(getX());
+		unb.setY(getY());
+		getWorld().add(unb);
+		
+		getWorld().remove(this);
+	}
 
 }
