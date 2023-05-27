@@ -29,3 +29,22 @@ fixed marios jumping mechanism
 - added moveAll method which moves every object other than mario in the world class.
 
 - goombas now die
+
+** 5/24/23 ** (half an hour)
+- brick superclass
+- enemy superclass
+- enemy/brick collision fixed
+
+** 5/25/23 ** (4 hours)
+- minor player/block interaction fixes
+- made koopa troopa 
+   - is an enemy
+   - hitting it turns it into a shell
+   - hitting a shell makes it spin around
+   - otherwise after some time it reverts back to big state
+
+** 5/26/23 ** (2 hours)
+- fixed block interactions with the player (most forms of clipping and teleporting are no longer possible)
+- made first level
+
+
