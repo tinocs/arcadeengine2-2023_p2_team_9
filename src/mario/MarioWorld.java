@@ -25,7 +25,6 @@ public class MarioWorld extends World {
 	
 	@Override
 	public void onDimensionsInitialized() {
-		
 		start();
 		
 		testWorld();
@@ -81,11 +80,14 @@ public class MarioWorld extends World {
 		makeBricks(300, 270, 1, 5, true);
 		newQBlock(360, 180);
 		
+		// pipe
 		makeBricks(510, 360, 2, 1, false);
 		goomba(600, 360);
+		// pipe
 		makeBricks(720, 360, 3, 1, false);
 		goomba(810, 360);
 		koopaTroopa(870, 360);
+		// pipe
 		makeBricks(930, 360, 3, 1, false);
 		makeBricks(1770, 270, 1, 3, true);
 		newQBlock(1800, 270);
@@ -125,7 +127,9 @@ public class MarioWorld extends World {
 		makeUBricks(4110, 300, 1, 2);
 		makeUBricks(4110, 270, 1, 1);
 		
+		// pipe
 		makeBricks(4350, 360, 2, 2, false);
+		makePipe(4350, 360);
 		makeBricks(4470, 270, 1, 4, false);
 		newQBlock(4530, 270);
 		
@@ -138,6 +142,12 @@ public class MarioWorld extends World {
 		makeUBricks(4980, 180, 1, 3);
 		makeUBricks(5010, 150, 1, 2);
 		makeBricks(5220, 360, 10, 1, true);
+	}
+	public void makePipe(int x, int y) {
+		Pipe p = new Pipe();
+		p.setX(x);
+		p.setY(y);;
+		add(p);
 	}
 	public void makeBricks(int x, int y, int height, int amt, boolean unb) {
 		int inX = x;
