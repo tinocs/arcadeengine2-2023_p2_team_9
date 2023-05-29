@@ -49,7 +49,7 @@ public class MarioPlayer extends Actor{
 	}
 	
 	private void controls() {
-		 if (blockOnTop() && !blockOnBottom()) {
+		 if (getTopBlockIntersections() > 13) {
 			 if (this.getOneObjectAtOffset((int)-getWidth()/2, (int)-getHeight()/2, Block.class) != null) {
 				 this.getOneObjectAtOffset((int)-getWidth()/2, (int)-getHeight()/2, Block.class).killSwitch();
 			 } else {
@@ -59,11 +59,10 @@ public class MarioPlayer extends Actor{
 			 move(0, 5);
 		 }else if((getWorld().isKeyPressed(KeyCode.UP) || getWorld().isKeyPressed(KeyCode.W)) && blockOnBottom()) {
 				jump(-15);
-		 } else if ((getWorld().isKeyPressed(KeyCode.LEFT) || getWorld().isKeyPressed(KeyCode.A)) && !blockOnLeft()) {
+		 } else if ((getWorld().isKeyPressed(KeyCode.LEFT) || getWorld().isKeyPressed(KeyCode.A)) && !blockOnLeft() && getLeftBlockIntersections() <= 1) {
 			if (getX() >= ((MarioWorld)getWorld()).playerLOffset) {
 				move(-speed,0);
 			}
-			
 			frame();
 			isRight = false;
 		} else if ((getWorld().isKeyPressed(KeyCode.RIGHT) || getWorld().isKeyPressed(KeyCode.D)) && !blockOnRight()) {
@@ -82,8 +81,30 @@ public class MarioPlayer extends Actor{
 		}
 		
 	}
+	public int getLeftBlockIntersections() {
+		int counter = 0;
+		for (int i = -(int)getHeight()/2; i <= (int)getHeight()/2; i++) {
+			if (blockAt(-(int)getWidth(), i)) {
+				counter++;
+			}
+		}
+		System.out.println(counter);
+		return counter;
+	}
+	public int getTopBlockIntersections() {
+		int counter = 0;
+		for (int i = -(int)getWidth()/2; i <= (int)getWidth()/2; i++) {
+			if (blockAt(i, -(int)getHeight()/2)) {
+				counter++;
+			}
+		}
+		return counter;
+	}
+	public boolean blockAt(int dx, int dy) {
+		return this.getOneObjectAtOffset(dx, dy, Block.class) != null;
+	}
 	public boolean blockOnTop() {
-		return (this.getOneObjectAtOffset(-(int)getWidth()/2, (int)-getHeight()/2, Block.class) != null || this.getOneObjectAtOffset((int)getWidth()/2, (int)-getHeight()/2, Block.class) != null);
+		return (this.getOneObjectAtOffset(-(int)getWidth()/2, (int)-getHeight()/2, Block.class) != null || this.getOneObjectAtOffset((int)getWidth()/2, (int)-getHeight()/2, Block.class) != null) && this.getOneObjectAtOffset(0, (int)-getHeight()/2, Block.class) != null;
 	}
 	public boolean blockOnBottom() {
 		return this.getOneObjectAtOffset(-(int)getWidth()/2, (int)getHeight()/2, Block.class) != null || this.getOneObjectAtOffset((int)getWidth()/2, (int)getHeight()/2, Block.class) != null;
