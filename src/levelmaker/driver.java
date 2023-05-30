@@ -161,10 +161,12 @@ public class driver extends Application {
 					block.setX(x);
 					block.setY(y);
 					w.add(block);
+					block.getTimer().stop();
 				} else if (e.getClass() == KoopaTroopa.class) {
 					Enemy block = new KoopaTroopa(false);
 					block.setX(x);
 					block.setY(y);
+					block.getTimer().stop();
 					w.add(block);
 				}
 			} else if (isPlayer) {
