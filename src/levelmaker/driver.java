@@ -184,6 +184,7 @@ public class driver extends Application {
 		
 	}
 	
+	// need to get actual actor coords (getX() getY() in Actor.java -> mario.package?)
 	public void removeObjectAt(int x, int y) {
 		for (Node a : w.getChildren()) {
 			a = (Actor) a;
