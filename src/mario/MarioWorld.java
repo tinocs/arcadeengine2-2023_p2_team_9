@@ -149,7 +149,7 @@ public class MarioWorld extends World {
 		makeBricks(5220, 360, 10, 1, true);
 	}
 	public void makePipe(int x, int y) {
-		Pipe p = new Pipe();
+		Pipe p = new Pipe(1, 1);
 		p.setX(x);
 		p.setY(y);;
 		add(p);

@@ -18,7 +18,7 @@ public abstract class Actor extends ImageView {
 	public abstract void act(long now);
 	
 	public void addedToWorld() {
-		
+		getTimer().start();
 	}
 	public double getHeight() {
 		return this.getBoundsInParent().getHeight();

@@ -36,7 +36,6 @@ public class MarioPlayer extends Actor{
     
     public MarioPlayer() {
     	setImage(stand1);
-    	getTimer().start();
     	speed = 4;
     	
     }

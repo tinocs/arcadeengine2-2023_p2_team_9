@@ -18,7 +18,6 @@ public class KoopaTroopa extends Enemy {
 	
 	private int shellCounter = 0;
 	public KoopaTroopa(boolean dir) {
-		getTimer().start();
 		isRight = dir;
 		if (isRight)  {
 			setImage(Right1);
