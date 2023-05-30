@@ -1,7 +1,9 @@
 package levelmaker;
 
+import engine.Actor;
 import javafx.application.Application;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -70,7 +72,7 @@ public class driver extends Application {
 			} else if (event.getCode() == KeyCode.LEFT) {
 				w.moveAll(30, 0);
 			} else {
-				System.out.println(event.getText());
+				//System.out.println(event.getText());
 				char c = event.getText().charAt(0);
 				if (c == 'b') {
 					isBlock = true;
@@ -132,6 +134,8 @@ public class driver extends Application {
 		public void handle(MouseEvent event) {
 			int x = (int) event.getX() - (int) event.getX()%30;
 			int y = (int) event.getY() - (int) event.getY()%30;
+			System.out.print("From" + x + ", " + y + " ---> ");
+			removeObjectAt(x, y);
 			//System.out.println(x + ", " + y);
 			if (isBlock) {
 				if (b.getClass() == Brick.class) {
@@ -166,8 +170,8 @@ public class driver extends Application {
 					Enemy block = new KoopaTroopa(false);
 					block.setX(x);
 					block.setY(y);
-					block.getTimer().stop();
 					w.add(block);
+					block.getTimer().stop();
 				}
 			} else if (isPlayer) {
 				MarioPlayer block = new MarioPlayer();
@@ -178,5 +182,15 @@ public class driver extends Application {
 			
 		}
 		
+	}
+	
+	public void removeObjectAt(int x, int y) {
+		for (Node a : w.getChildren()) {
+			a = (Actor) a;
+			System.out.println("to " + a.getLayoutX() + ", " + a.getLayoutY());
+			if (a.getLayoutX() == x && a.getLayoutY() == y) {
+				System.out.println("remove");
+			}
+		}
 	}
 }
