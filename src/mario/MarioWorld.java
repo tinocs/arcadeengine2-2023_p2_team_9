@@ -28,30 +28,35 @@ public class MarioWorld extends World {
 		start();
 		
 		testWorld();
-		/*
-		int x = 0;
-		int y = (int) (getHeight()-new Brick(false).getHeight());
-		makeBricks(x, y, 4, 100, false);
-		makeBricks(200, 350, 1, 2, true);
-		makeBricks(500, 350, 1, 2, false);
-		//makeBricks(100, 250, 1, 10, true);
-		mario = new MarioPlayer();
-		mario.setX(40);
-		mario.setY(y - new Brick(false).getHeight()*4 - mario.getHeight());
-		add(mario);
 		
+//		int x = 0;
+//		int y = (int) (getHeight()-new Brick(false).getHeight());
+//		makeBricks(x, y, 4, 100, false);
+//		makeBricks(200, 370, 1, 2, true);
+//		makeBricks(500, 370, 1, 2, false);
+//		//makeBricks(100, 250, 1, 10, true);
+//		mario = new MarioPlayer();
+//		mario.setX(40);
+//		mario.setY(y - new Brick(false).getHeight()*4 - mario.getHeight());
+//		add(mario);
+//		
+//		
+//		Goomba goomba = new Goomba();
+//		goomba.setX(800);
+//		goomba.setY(300);
+//		add(goomba);
+//		
+//		
+//		KoopaTroopa kt = new KoopaTroopa(true);
+//		kt.setX(350);
+//		kt.setY(300);
+//		add(kt);
+//		
+//		Pipe p = new Pipe(1, 2);
+//		p.setX(600);
+//		p.setY(360);
+//		add(p);
 		
-		Goomba goomba = new Goomba();
-		goomba.setX(800);
-		goomba.setY(300);
-		add(goomba);
-		
-		
-		KoopaTroopa kt = new KoopaTroopa(true);
-		kt.setX(350);
-		kt.setY(300);
-		add(kt);
-		*/
 	}
 	
 	public void testWorld() {
