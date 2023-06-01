@@ -1,5 +1,10 @@
 package levelmaker;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.net.URISyntaxException;
+
 import engine.Actor;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -20,19 +25,31 @@ import mario.Goomba;
 import mario.KoopaTroopa;
 import mario.MarioPlayer;
 import mario.MarioWorld;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 
 public class driver extends Application {
+	static int save = 1;
+	
+	MediaView mediaView;
 	BorderPane root;
 	LevelWorld w = new LevelWorld();
 	@Override
 	public void start(Stage stage) throws Exception {
-		stage.setTitle("Arcade Engine Test App");
+		stage.setTitle("Level Maker");
 		root = new BorderPane();
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
 		root.setCenter(w);
 		root.getChildren().add(b);
 		stage.setResizable(false);
+		
+		//playMusic("tui.mp3");
+		
+		createWall(-240);
+		createWall(5400);
+		initializeBoundary();
 		stage.show();
 		
 		root.setOnMousePressed(new MyMouseEventHandler());
@@ -41,14 +58,37 @@ public class driver extends Application {
 	}
 
 	public static void main(String[] args) {
+		
 		launch(args);
 	}
+	UnbreakaBlock leftPass = new UnbreakaBlock();
+	UnbreakaBlock rightPass = new UnbreakaBlock();
+	boolean toRemove = false;
 	boolean isBlock = true;
 	boolean isEnemy = false;
 	boolean isPlayer = false;
+	boolean playerOver = false;
 	Block b = new Brick(false);
 	Enemy e = new Goomba();
 	MarioPlayer m = new MarioPlayer();
+	public void createWall(int startX) {
+		for (int x = startX; x <= startX + 300; x+=30) {
+			for (int y = 0; y <= 480; y+=30) {
+				UnbreakaBlock block = new UnbreakaBlock();
+				block.setX(x);
+				block.setY(y);
+				w.add(block);
+			}
+		}
+	}
+	public void initializeBoundary() {
+		leftPass.setX(-240);
+		leftPass.setY(0);
+		w.add(leftPass);
+		rightPass.setX(5700);
+		rightPass.setY(0);
+		w.add(rightPass);
+	}
 	/*
 	 * b: brick
 	 * u: unbreakabrick
@@ -60,24 +100,42 @@ public class driver extends Application {
 	 * 
 	 * m: mario
 	 * 
+	 * r: remove
 	 * left arrow: scroll view left
 	 * right arrow: scroll view right
+	 * 
+	 * s: save
 	 */
 	private class MyKeyEventHandler implements EventHandler<KeyEvent> {
 
 		@Override
 		public void handle(KeyEvent event) {
-			if (event.getCode() == KeyCode.RIGHT) {
+			if (event.getCode() == KeyCode.RIGHT && rightPass.getX() >= 870) {
 				w.moveAll(-30, 0);
-			} else if (event.getCode() == KeyCode.LEFT) {
+			} else if (event.getCode() == KeyCode.LEFT && leftPass.getX() <= -60) {
+				//System.out.println(leftPass.isVisible());
 				w.moveAll(30, 0);
-			} else {
+			} else if (event.getCode() != KeyCode.LEFT && event.getCode() != KeyCode.RIGHT){
 				//System.out.println(event.getText());
 				char c = event.getText().charAt(0);
-				if (c == 'b') {
+				if (c == 's') {
+					File f = new File("save" + save++ + ".txt");
+					try {
+						FileWriter write = new FileWriter(f);
+						for (Node a : w.getChildren()) {
+							Actor actor = (Actor) a;
+							String toWrite = actor.getX() + "," + actor.getY() + ":" + actor.getClass().toString().substring(12);
+							write.write(toWrite + "\n");
+						}
+						write.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				} else if (c == 'b') {
 					isBlock = true;
 					isEnemy = false;
 					isPlayer = false;
+					toRemove = false;
 					b = new Brick(false);
 					root.getChildren().remove(1);
 					root.getChildren().add(b);
@@ -85,6 +143,7 @@ public class driver extends Application {
 					isBlock = true;
 					isEnemy = false;
 					isPlayer = false;
+					toRemove = false;
 					b = new UnbreakaBlock();
 					root.getChildren().remove(1);
 					root.getChildren().add(b);
@@ -92,6 +151,7 @@ public class driver extends Application {
 					isBlock = true;
 					isEnemy = false;
 					isPlayer = false;
+					toRemove = false;
 					b = new QuestionBlock();
 					root.getChildren().remove(1);
 					root.getChildren().add(b);
@@ -99,6 +159,7 @@ public class driver extends Application {
 					isBlock = true;
 					isEnemy = false;
 					isPlayer = false;
+					toRemove = false;
 					b = new Pipe(1, 1);
 					root.getChildren().remove(1);
 					root.getChildren().add(b);
@@ -106,6 +167,7 @@ public class driver extends Application {
 					isBlock = false;
 					isEnemy = true;
 					isPlayer = false;
+					toRemove = false;
 					e = new Goomba();
 					
 					root.getChildren().remove(1);
@@ -114,19 +176,28 @@ public class driver extends Application {
 					isBlock = false;
 					isEnemy = true;
 					isPlayer = false;
+					toRemove = false;
 					e = new KoopaTroopa(false);
 					root.getChildren().remove(1);
 					root.getChildren().add(e);
-				} else if (c == 'm') {
+				} else if (c == 'm' && !playerOver) {
 					isBlock = false;
 					isEnemy = false;
 					isPlayer = true;
+					toRemove = false;
 					root.getChildren().remove(1);
 					root.getChildren().add(m);
+				} else if (c == 'r') {
+					isBlock = false;
+					isEnemy = false;
+					isPlayer = false;
+					toRemove = true;
+					root.getChildren().get(1).resize(1, 1);
 				}
 			}
 		}
 	}
+	
 	
 	private class MyMouseEventHandler implements EventHandler<MouseEvent> {
 
@@ -134,7 +205,7 @@ public class driver extends Application {
 		public void handle(MouseEvent event) {
 			int x = (int) event.getX() - (int) event.getX()%30;
 			int y = (int) event.getY() - (int) event.getY()%30;
-			System.out.print("From" + x + ", " + y + " ---> ");
+			//System.out.print("From" + x + ", " + y + " ---> ");
 			removeObjectAt(x, y);
 			//System.out.println(x + ", " + y);
 			if (isBlock) {
@@ -173,11 +244,15 @@ public class driver extends Application {
 					w.add(block);
 					block.getTimer().stop();
 				}
-			} else if (isPlayer) {
+			} else if (isPlayer && !playerOver) {
 				MarioPlayer block = new MarioPlayer();
 				block.setX(x);
 				block.setY(y);
 				w.add(block);
+				block.getTimer().stop();
+				playerOver = true;
+			} else if (toRemove) {
+				removeObjectAt(x, y);
 			}
 			
 		}
@@ -187,11 +262,27 @@ public class driver extends Application {
 	// need to get actual actor coords (getX() getY() in Actor.java -> mario.package?)
 	public void removeObjectAt(int x, int y) {
 		for (Node a : w.getChildren()) {
-			a = (Actor) a;
-			System.out.println("to " + a.getLayoutX() + ", " + a.getLayoutY());
-			if (a.getLayoutX() == x && a.getLayoutY() == y) {
-				System.out.println("remove");
+			if (((Actor)a).getX() == x && ((Actor)a).getY() == y) {
+				if (a.getClass() == MarioPlayer.class) {
+					playerOver = false;
+				}
+				w.getChildren().remove(a);
+				break;
 			}
+		}
+	}
+	
+	public void playMusic(String url) {
+		try {
+			mediaView = new MediaView();
+			String filename = getClass().getResource(url).toURI().toString();
+			Media media = new Media(filename);  
+			MediaPlayer player = new MediaPlayer(media);
+			
+			mediaView.setMediaPlayer(player);
+			mediaView.getMediaPlayer().play();
+		} catch (URISyntaxException e) {
+			System.out.println("syntax exception");
 		}
 	}
 }
