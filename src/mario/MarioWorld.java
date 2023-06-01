@@ -28,7 +28,6 @@ public class MarioWorld extends World {
 		start();
 		
 		testWorld();
-		
 //		int x = 0;
 //		int y = (int) (getHeight()-new Brick(false).getHeight());
 //		makeBricks(x, y, 4, 100, false);
@@ -56,7 +55,7 @@ public class MarioWorld extends World {
 //		p.setX(600);
 //		p.setY(360);
 //		add(p);
-		
+//		
 	}
 	
 	public void testWorld() {
@@ -134,7 +133,7 @@ public class MarioWorld extends World {
 		
 		// pipe
 		makeBricks(4350, 360, 2, 2, false);
-		makePipe(4350, 360);
+		makePipe(4350, 360,1,3);
 		makeBricks(4470, 270, 1, 4, false);
 		newQBlock(4530, 270);
 		
@@ -148,8 +147,8 @@ public class MarioWorld extends World {
 		makeUBricks(5010, 150, 1, 2);
 		makeBricks(5220, 360, 10, 1, true);
 	}
-	public void makePipe(int x, int y) {
-		Pipe p = new Pipe();
+	public void makePipe(int x, int y, int h, int dir) {
+		Pipe p = new Pipe(h, dir);
 		p.setX(x);
 		p.setY(y);;
 		add(p);

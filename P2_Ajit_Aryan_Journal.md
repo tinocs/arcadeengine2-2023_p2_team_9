@@ -28,3 +28,6 @@ made the dead goomba stay in the air rather than float in the air. Spit anc cut 
 **5/26/2023 - home (20 min)**
 Added collision with pipe in enemy class to help goomba collision. Adding this to enemy super class makes collsions with other enemies more streamlined.
 
+**5/30/2023 - school (15min)**
+fixed mario-goomba collision to make it jump when killing goomba. going to try to make it go through after killing it.
+

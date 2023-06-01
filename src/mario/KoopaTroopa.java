@@ -81,7 +81,7 @@ public class KoopaTroopa extends Enemy {
 			shellWall();
 			if (playerOnTop() && speed != 0) {
 				speed = 0;
-				getPlayer().jump(-15);
+				getPlayer().jump(-5);
 			} else if (speed == 0) {
 				if (playerOnRight()) {
 					speed = -1;

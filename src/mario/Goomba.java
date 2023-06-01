@@ -54,7 +54,12 @@ public class Goomba extends Enemy {
 			if (m.getY() < getY() - m.getHeight()/2) {
 				setImage(goombaSquish);
 				isDead = true;
+				getPlayer().jump(-5);
 			}
 		}
 	}
+	
+//	public void goombaInteraction() {
+//		if()
+//	}
 }

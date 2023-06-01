@@ -8,6 +8,7 @@
 package mario;
 
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class Pipe extends Block{
 	int height;
@@ -37,5 +38,19 @@ public class Pipe extends Block{
 		// TODO Auto-generated method stub
 		
 	}
+	
+	private class extend extends Block{
+		private extend() {
+			final Image img = new Image(IMG_PREFIX + "extendPipe.png");
+			ImageView iv = new ImageView(img);
+			if(dir == 2) {
+				setImage(right);
+			}else {
+				setImage(left);
+			}
+		}
+	}
 
 }
+
+

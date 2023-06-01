@@ -88,7 +88,7 @@ public class MarioPlayer extends Actor{
 				counter++;
 			}
 		}
-		System.out.println(counter);
+		//System.out.println(counter);
 		return counter;
 	}
 	public int getTopBlockIntersections() {
@@ -157,6 +157,8 @@ public class MarioPlayer extends Actor{
 			canJump = true;
 			vel = 0;
 		}
+		
+		
 	}
 	public void jump(int vel) {
 		// TODO Auto-generated method stub
