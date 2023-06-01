@@ -29,5 +29,7 @@ made the dead goomba stay in the air rather than float in the air. Spit anc cut 
 Added collision with pipe in enemy class to help goomba collision. Adding this to enemy super class makes collsions with other enemies more streamlined.
 
 **5/30/2023 - school (15min)**
-fixed mario-goomba collision to make it jump when killing goomba. going to try to make it go through after killing it.
+fixed mario-goomba collision to make it jump when killing goomba. going to try to make it go through after killing it. Pushed on 3/1/2023
 
+**6/1/2023 - school (90min)**
+fully made the makePipe method. You can feed it a height and direction and it will create a Pipe with that height and direction. I used an extra two variables named: h and dir. For directon, 1 is up, 2 is right, 3 is left.

@@ -27,34 +27,37 @@ public class MarioWorld extends World {
 	public void onDimensionsInitialized() {
 		start();
 		
-		testWorld();
-//		int x = 0;
-//		int y = (int) (getHeight()-new Brick(false).getHeight());
-//		makeBricks(x, y, 4, 100, false);
-//		makeBricks(200, 370, 1, 2, true);
-//		makeBricks(500, 370, 1, 2, false);
-//		//makeBricks(100, 250, 1, 10, true);
-//		mario = new MarioPlayer();
-//		mario.setX(40);
-//		mario.setY(y - new Brick(false).getHeight()*4 - mario.getHeight());
-//		add(mario);
-//		
-//		
-//		Goomba goomba = new Goomba();
-//		goomba.setX(800);
-//		goomba.setY(300);
-//		add(goomba);
-//		
-//		
-//		KoopaTroopa kt = new KoopaTroopa(true);
-//		kt.setX(350);
-//		kt.setY(300);
-//		add(kt);
-//		
+		//testWorld();
+		int x = 0;
+		int y = (int) (getHeight()-new Brick(false).getHeight());
+		makeBricks(x, y, 4, 100, false);
+		makeBricks(200, 370, 1, 2, true);
+		makeBricks(500, 370, 1, 2, false);
+		//makeBricks(100, 250, 1, 10, true);
+		mario = new MarioPlayer();
+		mario.setX(40);
+		mario.setY(y - new Brick(false).getHeight()*4 - mario.getHeight());
+		add(mario);
+		
+		makePipe(100,380,6,1);
+		
+		Goomba goomba = new Goomba();
+		goomba.setX(800);
+		goomba.setY(300);
+		add(goomba);
+		
+		
+		KoopaTroopa kt = new KoopaTroopa(true);
+		kt.setX(350);
+		kt.setY(300);
+		add(kt);
+		
 //		Pipe p = new Pipe(1, 2);
 //		p.setX(600);
 //		p.setY(360);
 //		add(p);
+		
+		makePipe(600,360,6,2);
 //		
 	}
 	
@@ -148,10 +151,58 @@ public class MarioWorld extends World {
 		makeBricks(5220, 360, 10, 1, true);
 	}
 	public void makePipe(int x, int y, int h, int dir) {
-		Pipe p = new Pipe(h, dir);
-		p.setX(x);
-		p.setY(y);;
-		add(p);
+		
+		if(dir == 1) {
+			for (int i = 0; i < h; i++) {
+				ExtendPipe e = new ExtendPipe(dir);
+				e.setX(x);
+				e.setY(y);
+				add(e);
+				if(i != h-1) {
+					y-=e.getHeight();
+				}
+				
+			}
+			
+			Pipe p = new Pipe( dir);
+			y-=p.getHeight();
+			p.setX(x);
+			p.setY(y);;
+			add(p);
+		}else if(dir == 2) {
+			for (int i = 0; i < h; i++) {
+				ExtendPipe e = new ExtendPipe(dir);
+				e.setX(x);
+				e.setY(y);
+				add(e);
+				if(i != h-1) {
+					x+=e.getHeight();
+				}
+				
+			}
+			Pipe p = new Pipe(dir);
+			x+=p.getHeight();
+			p.setX(x);
+			p.setY(y);;
+			add(p);
+		}else if(dir == 3) { 
+			for (int i = 0; i < h; i++) {
+				ExtendPipe e = new ExtendPipe(dir);
+				e.setX(x);
+				e.setY(y);
+				add(e);
+				if(i != h-1) {
+					x-=e.getHeight();
+				}
+				
+			}
+			Pipe p = new Pipe(dir);
+			x-=p.getHeight();
+			p.setX(x);
+			p.setY(y);;
+			add(p);
+		}
+//		
 	}
 	public void makeBricks(int x, int y, int height, int amt, boolean unb) {
 		int inX = x;
