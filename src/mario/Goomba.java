@@ -21,7 +21,6 @@ public class Goomba extends Enemy {
 	
 	public Goomba() {
 		setImage(goomba1);
-		getTimer().start();
 	}
 	
 	@Override
