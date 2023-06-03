@@ -116,8 +116,8 @@ public class driver extends Application {
 				//System.out.println(leftPass.isVisible());
 				w.moveAll(30, 0);
 			} else if (event.getCode() != KeyCode.LEFT && event.getCode() != KeyCode.RIGHT){
-				//System.out.println(event.getText());
 				char c = event.getText().charAt(0);
+				
 				if (c == 's') {
 					File f = new File("save" + save++ + ".txt");
 					try {
