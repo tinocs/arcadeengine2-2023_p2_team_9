@@ -21,6 +21,7 @@ import mario.UnbreakaBlock;
 import mario.QuestionBlock;
 import mario.Pipe;
 import mario.Enemy;
+import mario.ExtendPipe;
 import mario.Goomba;
 import mario.KoopaTroopa;
 import mario.MarioPlayer;
@@ -160,7 +161,7 @@ public class driver extends Application {
 					isEnemy = false;
 					isPlayer = false;
 					toRemove = false;
-					b = new Pipe(1, 1);
+					b = new Pipe(1);
 					root.getChildren().remove(1);
 					root.getChildren().add(b);
 				} else if (c == 'g') {
@@ -215,7 +216,20 @@ public class driver extends Application {
 					block.setY(y);
 					w.add(block);
 				} else if (b.getClass() == Pipe.class) {
-					Block block = new Pipe(1, 1);
+					Block block;
+					if (getObjectAt(x, y - 30) != null && (getObjectAt(x, y - 30).getClass() == Pipe.class || getObjectAt(x, y - 30).getClass() == ExtendPipe.class)) {
+						block = new ExtendPipe(1);
+					} else {
+						block = new Pipe(1);
+					}
+					
+					if (getObjectAt(x, y + 30) != null && getObjectAt(x, y + 30).getClass() == Pipe.class) {
+						removeObjectAt(x, y + 30);
+						ExtendPipe p = new ExtendPipe(1);
+						p.setX(x);
+						p.setY(y+30);
+						w.add(p);
+					}
 					block.setX(x);
 					block.setY(y);
 					w.add(block);
@@ -259,6 +273,14 @@ public class driver extends Application {
 		
 	}
 	
+	public Actor getObjectAt(int x, int y) {
+		for (Node a : w.getChildren()) {
+			if (((Actor)a).getX() == x && ((Actor)a).getY() == y) {
+				return (Actor) a;
+			}
+		}
+		return null;
+	}
 	// need to get actual actor coords (getX() getY() in Actor.java -> mario.package?)
 	public void removeObjectAt(int x, int y) {
 		for (Node a : w.getChildren()) {

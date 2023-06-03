@@ -28,18 +28,19 @@ public class MarioWorld extends World {
 		start();
 		
 		//testWorld();
+		///*
 		int x = 0;
 		int y = (int) (getHeight()-new Brick(false).getHeight());
 		makeBricks(x, y, 4, 100, false);
-		makeBricks(200, 370, 1, 2, true);
-		makeBricks(500, 370, 1, 2, false);
+		makeBricks(200, 360, 1, 2, true);
+		makeBricks(500, 360, 1, 2, false);
 		//makeBricks(100, 250, 1, 10, true);
 		mario = new MarioPlayer();
 		mario.setX(40);
 		mario.setY(y - new Brick(false).getHeight()*4 - mario.getHeight());
 		add(mario);
 		
-		makePipe(100,380,6,1);
+		makePipe(100,360,6,1);
 		
 		Goomba goomba = new Goomba();
 		goomba.setX(800);
@@ -58,6 +59,7 @@ public class MarioWorld extends World {
 //		add(p);
 		
 		makePipe(600,360,6,2);
+		//*/
 //		
 	}
 	

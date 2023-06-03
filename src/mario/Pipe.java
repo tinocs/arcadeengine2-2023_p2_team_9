@@ -8,16 +8,15 @@
 package mario;
 
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 public class Pipe extends Block{
 	int height;
 	int dir;
 	//images
 		private static final String IMG_PREFIX = "gameresources/";
-		private static final Image top  = new Image(IMG_PREFIX + "topPipe.png");
-		private static final Image left  = new Image(IMG_PREFIX + "leftpipe.png");
-		private static final Image right  = new Image(IMG_PREFIX + "rightPipe.png");
+		private static final Image top  = new Image(IMG_PREFIX + "topPipe.png", 30, 30, false, false);
+		private static final Image left  = new Image(IMG_PREFIX + "leftpipe.png", 30, 30, false, false);
+		private static final Image right  = new Image(IMG_PREFIX + "rightPipe.png", 30, 30, false, false);
 	
 	public Pipe(int dir) {
 		this.dir = dir;
