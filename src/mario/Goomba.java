@@ -25,23 +25,25 @@ public class Goomba extends Enemy {
 	
 	@Override
 	public void act(long now) {
-		gravity();
-		playerInteraction();
-		detectWalls();
-		
-		if (!isDead) {
+		if (getX() >= -90 && getX() <= 900) {
+			gravity();
+			playerInteraction();
+			detectWalls();
 			
-			move(speed,0);
-			if(frame % 20 == 0) {
-				setImage(goomba2);
-			}else if(frame % 10 == 0){
-				setImage(goomba1);
-			}
-			frame++;
-		} else {
-			deadCounter++;
-			if (deadCounter == 50) {
-				getWorld().remove(this);
+			if (!isDead) {
+				
+				move(speed,0);
+				if(frame % 20 == 0) {
+					setImage(goomba2);
+				}else if(frame % 10 == 0){
+					setImage(goomba1);
+				}
+				frame++;
+			} else {
+				deadCounter++;
+				if (deadCounter == 50) {
+					getWorld().remove(this);
+				}
 			}
 		}
 		
@@ -54,6 +56,8 @@ public class Goomba extends Enemy {
 				setImage(goombaSquish);
 				isDead = true;
 				getPlayer().jump(-5);
+			} else if (!isDead) {
+				getPlayer().setDead(true);
 			}
 		}
 	}

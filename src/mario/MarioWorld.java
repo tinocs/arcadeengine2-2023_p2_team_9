@@ -1,34 +1,55 @@
 package mario;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Random;
+import java.util.Scanner;
+
 import engine.Actor;
 import engine.World;
 import javafx.scene.Node;
 
 public class MarioWorld extends World {
+	private final static int MARIO_POS = 60;
 	MarioPlayer mario;
 	int w = 870;
 	int h = 510;
 	public int playerLOffset = 300;
 	public int playerROffset = 500;
+	
+	int levelOn = 1;
+	
+	File f = new File("Level1.txt");
 	public MarioWorld() {
 		setPrefSize(w, h);
 	}
 
 	@Override
 	public void act(long now) {
-		if (mario.getX() > w - playerROffset && mario.isGoingRight() && !mario.blockOnRight()) {
-			moveAll((int)-mario.getSpeed(), 0);
-		} else if (mario.getX() < playerLOffset && mario.isGoingLeft() && !mario.blockOnLeft()) {
-			moveAll((int)mario.getSpeed(), 0);
+		if (!mario.getDead()) {
+			if (mario.getX() > w - playerROffset && mario.isGoingRight() && !mario.blockOnRight()) {
+				moveAll((int)-mario.getSpeed(), 0, false);
+			} else if (mario.getX() < playerLOffset && mario.isGoingLeft() && !mario.blockOnLeft()) {
+				moveAll((int)mario.getSpeed(), 0, false);
+			}
 		}
 	}
 	
 	@Override
 	public void onDimensionsInitialized() {
-		start();
 		
+		
+		try {
+			loadWorld(f);
+		} catch (Exception e) { 
+			System.out.println("File not found."); 
+			e.printStackTrace();
+		}
+		
+		
+		start();
 		//testWorld();
-		///*
+		/*
 		int x = 0;
 		int y = (int) (getHeight()-new Brick(false).getHeight());
 		makeBricks(x, y, 4, 100, false);
@@ -59,8 +80,60 @@ public class MarioWorld extends World {
 //		add(p);
 		
 		makePipe(600,360,6,2);
-		//*/
+		*/
 //		
+	}
+	
+	public void loadWorld(File f) throws Exception {
+		Scanner scan = new Scanner(f);
+		
+		this.getChildren().removeAll(getChildren());
+		
+		while (scan.hasNext()) {
+			String str = scan.nextLine();
+			double x = Double.parseDouble(str.substring(0, str.indexOf(',')));
+			double y = Double.parseDouble(str.substring(str.indexOf(',')+1, str.indexOf(':')));
+			String actorClass = str.substring(str.indexOf(':')+1) ;
+			//System.out.println("adding at " + x + ", " + y + " class is " + actorClass);
+			Actor a = null;
+			Random r = new Random();
+			int rand = r.nextInt(1);
+			if (actorClass.equals("Brick")) {
+				if (rand == 0) {
+					a = new Brick(false);
+				} else {
+					a = new Brick(true);
+				}
+			} else if (actorClass.equals("QuestionBlock")) {
+				a = new QuestionBlock();
+			} else if (actorClass.equals("UnbreakaBlock")) {
+				a = new UnbreakaBlock();
+			} else if (actorClass.equals("Pipe")) {
+				a = new Pipe(1);
+			} else if (actorClass .equals("ExtendPipe")) {
+				a = new ExtendPipe(1);
+			}else if (actorClass.equals("KoopaTroopa")) {
+				if (rand == 0) {
+					a = new KoopaTroopa(false);
+				} else {
+					a = new KoopaTroopa(true);
+				}
+			} else if (actorClass.equals("MarioPlayer")) {
+				mario = new MarioPlayer();
+				mario.setX(x);
+				mario.setY(y);
+				add(mario);
+			} else {
+				a = new Goomba();
+			}
+			if (a != null) {
+				a.setX(x);
+				a.setY(y);
+				add(a);
+			}
+		}
+		scan.close();
+		//System.out.println("file found!");
 	}
 	
 	public void testWorld() {
@@ -68,7 +141,7 @@ public class MarioWorld extends World {
 		int y = (int) (getHeight() - 30);
 		
 		mario = new MarioPlayer();
-		mario.setX(40);
+		mario.setX(MARIO_POS);
 		mario.setY(y - new Brick(false).getHeight()*4 - mario.getHeight());
 		add(mario);
 		
@@ -82,7 +155,6 @@ public class MarioWorld extends World {
 		makeBricks(x, y, 4, 66, false);
 		x+=(int)new Brick(false).getWidth()*68;
 		makeBricks(x, y, 4, 66, false);
-		System.out.println(x);
 		
 		koopaTroopa(350, 360);
 		newQBlock(210, 270);
@@ -253,9 +325,9 @@ public class MarioWorld extends World {
 		kt.setY(y);
 		add(kt);
 	}
-	public void moveAll(int xDir, int yDir) {
+	public void moveAll(int xDir, int yDir, boolean moveMario) {
 		for (Node n : getChildren()) {
-			if (n != mario) {
+			if (n != mario && !moveMario) {
 				((Actor) n).move(xDir, yDir);
 			}
 		}

@@ -9,7 +9,7 @@ public class GameStart extends Application {
 
 	@Override
 	public void start(Stage stage) throws Exception {
-		stage.setTitle("Arcade Engine Test App");
+		stage.setTitle("Mario Game");
 		BorderPane root = new BorderPane();
 		Scene scene = new Scene(root);
 		stage.setScene(scene);

@@ -33,6 +33,9 @@ import javafx.scene.media.MediaView;
 public class driver extends Application {
 	static int save = 1;
 	
+	int displacement;
+	private static final String NAME = "Level1";
+	
 	MediaView mediaView;
 	BorderPane root;
 	LevelWorld w = new LevelWorld();
@@ -72,6 +75,7 @@ public class driver extends Application {
 	Block b = new Brick(false);
 	Enemy e = new Goomba();
 	MarioPlayer m = new MarioPlayer();
+	MarioPlayer toAdd = new MarioPlayer();
 	public void createWall(int startX) {
 		for (int x = startX; x <= startX + 300; x+=30) {
 			for (int y = 0; y <= 480; y+=30) {
@@ -120,12 +124,14 @@ public class driver extends Application {
 				char c = event.getText().charAt(0);
 				
 				if (c == 's') {
-					File f = new File("save" + save++ + ".txt");
+					File f = new File(NAME + ".txt");
+					displacement = 180 - (int)toAdd.getX();
+					
 					try {
 						FileWriter write = new FileWriter(f);
 						for (Node a : w.getChildren()) {
 							Actor actor = (Actor) a;
-							String toWrite = actor.getX() + "," + actor.getY() + ":" + actor.getClass().toString().substring(12);
+							String toWrite = (displacement + actor.getX()) + "," + actor.getY() + ":" + actor.getClass().toString().substring(12);
 							write.write(toWrite + "\n");
 						}
 						write.close();
@@ -259,11 +265,11 @@ public class driver extends Application {
 					block.getTimer().stop();
 				}
 			} else if (isPlayer && !playerOver) {
-				MarioPlayer block = new MarioPlayer();
-				block.setX(x);
-				block.setY(y);
-				w.add(block);
-				block.getTimer().stop();
+				toAdd.setX(x);
+				toAdd.setY(y);
+				w.add(toAdd);
+				System.out.println(x);
+				toAdd.getTimer().stop();
 				playerOver = true;
 			} else if (toRemove) {
 				removeObjectAt(x, y);

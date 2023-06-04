@@ -7,17 +7,20 @@
  */
 package mario;
 
-import engine.Actor;	
+import engine.Actor;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 
-public class MarioPlayer extends Actor{
+public class MarioPlayer extends Actor {
 	double speed;
 	boolean canJump = false;
 	int vel = 0;
 	int jumpSpeed = 4;
 	int frame = 1;
 	boolean isRight = false;
+	
+	boolean isDead = false;
 	//images
 	private static final String IMG_PREFIX = "gameresources/";
     	//right
@@ -32,6 +35,7 @@ public class MarioPlayer extends Actor{
 	    private static final Image runL2 = new Image(IMG_PREFIX +"runL2.png", 20, 30, false, false);
 	    private static final Image runL3 = new Image(IMG_PREFIX +"runL3.png", 20, 30, false, false);
 	    private static final Image stand2 = new Image(IMG_PREFIX +"stand2.png", 20, 30, false, false);
+	    private static final Image death = new Image(IMG_PREFIX +"death.jpeg", 20, 30, false, false);
 	    //private static final Image dot = new Image(IMG_PREFIX +"tempPlayer.png", 2, 2, false, false);
     
     public MarioPlayer() {
@@ -41,11 +45,24 @@ public class MarioPlayer extends Actor{
     }
 	@Override
 	public void act(long now) {
-		gravity();
-		controls();
-		
+		if (!isDead) {
+			gravity();
+			controls();
+		}
 	}
-	
+	public void setDead(boolean bool) {
+		isDead = bool;
+		if (isDead) {
+			setImage(death);
+			Label l = new Label("You lost!");
+			l.setLayoutX(400);
+			l.setLayoutY(250);
+			getWorld().getChildren().add(l);
+		}
+	}
+	public boolean getDead() {
+		return isDead;
+	}
 	private void controls() {
 		 if (getTopBlockIntersections() > 12) {
 			 if (this.getOneObjectAtOffset((int)-getWidth()/2, (int)-getHeight()/2, Block.class) != null) {

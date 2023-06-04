@@ -30,66 +30,70 @@ public class KoopaTroopa extends Enemy {
 
 	@Override
 	public void act(long now) {
-		gravity();
-		
-		if (!zoomMode && !isDead) {
-			detectWalls();
-			playerInteraction();
-			if (!isShell) {
-				
-				if (speed > 0) {
-					isRight = true;
+		if (getX() >= -90 && getX() <= 900) {
+			gravity();
+			
+			if (!zoomMode && !isDead) {
+				detectWalls();
+				playerInteraction();
+				if (!isShell) {
+					
+					if (speed > 0) {
+						isRight = true;
+					} else {
+						isRight = false;
+					}
+					move(speed,0);
+					if(frame % 20 == 0) {
+						if (isRight) 
+							setImage(Right1);
+						else
+							setImage(Left1);
+					}else if(frame % 10 == 0){
+						if (isRight) 
+							setImage(Right2);
+						else
+							setImage(Left2);
+					}
+					frame++;
 				} else {
-					isRight = false;
+					shellCounter++;
+					if (shellCounter == 150) {
+						setImage(unSquish);
+					} else if (shellCounter == 200) {
+						shellCounter = 0;
+						isShell = false;
+					}
+					if ((playerOnLeft() || playerOnRight()) && shellCounter >= 50) {
+						shellCounter = 0;
+						zoomMode = true;
+						if (playerOnRight()) {
+							speed = -1;
+						} else if (playerOnLeft()){
+							speed = 1;
+						}
+						getPlayer().jump(-10);
+						move(5*speed, 0);
+					}
 				}
-				move(speed,0);
-				if(frame % 20 == 0) {
-					if (isRight) 
-						setImage(Right1);
-					else
-						setImage(Left1);
-				}else if(frame % 10 == 0){
-					if (isRight) 
-						setImage(Right2);
-					else
-						setImage(Left2);
-				}
-				frame++;
-			} else {
-				shellCounter++;
-				if (shellCounter == 150) {
-					setImage(unSquish);
-				} else if (shellCounter == 200) {
-					shellCounter = 0;
-					isShell = false;
-				}
-				if ((playerOnLeft() || playerOnRight()) && shellCounter >= 50) {
-					shellCounter = 0;
-					zoomMode = true;
+			} else if (zoomMode) {
+				move(3*speed, 0);
+				shellWall();
+				if (playerOnTop() && speed != 0) {
+					speed = 0;
+					getPlayer().jump(-5);
+				} else if ((playerOnLeft() || playerOnRight()) && speed != 0) {
+					getPlayer().setDead(true);
+				} else if (speed == 0 && !getPlayer().getDead()) {
 					if (playerOnRight()) {
 						speed = -1;
 					} else if (playerOnLeft()){
 						speed = 1;
 					}
-					getPlayer().jump(-10);
-					move(5*speed, 0);
 				}
+			} else if (isDead) {
+				
 			}
-		} else if (zoomMode) {
-			move(3*speed, 0);
-			shellWall();
-			if (playerOnTop() && speed != 0) {
-				speed = 0;
-				getPlayer().jump(-5);
-			} else if (speed == 0) {
-				if (playerOnRight()) {
-					speed = -1;
-				} else if (playerOnLeft()){
-					speed = 1;
-				}
-			}
-		} else if (isDead) {
-			
 		}
 	}
 	private void shellWall() {
@@ -105,12 +109,14 @@ public class KoopaTroopa extends Enemy {
 	}
 	@Override
 	public void playerInteraction() {
-		if (playerOnTop()) {
+		if (playerOnTop() && !getPlayer().getDead()) {
 			MarioPlayer m = getOneIntersectingObject(MarioPlayer.class);
 			setImage(squish);
 			isShell = true;
 			getPlayer().jump(-10);
 			//setPlayerPos(0, -30);
+		} else if (getPlayer() != null && !isShell){
+			getPlayer().setDead(true);
 		}
 	}
 	private boolean playerOnLeft() {
@@ -120,7 +126,7 @@ public class KoopaTroopa extends Enemy {
 		return this.getOneObjectAtOffset((int)getWidth()/2, (int)-getHeight()/2, MarioPlayer.class) != null || this.getOneObjectAtOffset((int)getWidth()/2, (int)getHeight()/2, MarioPlayer.class) != null;
 	}
 	private boolean playerOnTop() {
-		return this.getOneObjectAtOffset(0, (int)-getHeight()/2, MarioPlayer.class) != null;
+		return this.getOneObjectAtOffset((int)-getWidth()/4, (int)-getHeight()/2, MarioPlayer.class) != null || this.getOneObjectAtOffset((int)getWidth()/4, (int)-getHeight()/2, MarioPlayer.class) != null;
 	}
 	
 	private void setPlayerPos(int dx, int dy) {
