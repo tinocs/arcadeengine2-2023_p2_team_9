@@ -28,7 +28,7 @@ public class MarioWorld extends World {
 	UnbreakaBlock end = new UnbreakaBlock();
 	File f = new File("Level1.txt");
 	public MarioWorld() {
-		//playMusic("tgtf.mp3");
+		playMusic("tgtf.mp3");
 		end.setX(5730);
 		end.setY(0);
 		add(end);
