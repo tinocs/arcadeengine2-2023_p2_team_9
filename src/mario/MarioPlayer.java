@@ -67,12 +67,13 @@ public class MarioPlayer extends Actor {
 		 if (getTopBlockIntersections() > 12) {
 			 if (this.getOneObjectAtOffset((int)-getWidth()/2, (int)-getHeight()/2, Block.class) != null) {
 				 this.getOneObjectAtOffset((int)-getWidth()/2, (int)-getHeight()/2, Block.class).killSwitch();
-			 } else {
+				 move(0, 5);
+			 } else if (this.getOneObjectAtOffset((int)getWidth()/2, (int)-getHeight()/2, Block.class) != null) {
 				 this.getOneObjectAtOffset((int)getWidth()/2, (int)-getHeight()/2, Block.class).killSwitch();
+				 move(0, 5);
 			 }
 			 vel = 0;
-			 move(0, 5);
-		 }else if((getWorld().isKeyPressed(KeyCode.UP) || getWorld().isKeyPressed(KeyCode.W)) && blockOnBottom()) {
+		 }else if((getWorld().isKeyPressed(KeyCode.UP) || getWorld().isKeyPressed(KeyCode.W)) && blockOnBottom() && getTopBlockIntersections() == 0) {
 				jump(-15);
 		 } else if ((getWorld().isKeyPressed(KeyCode.LEFT) || getWorld().isKeyPressed(KeyCode.A)) && getLeftBlockIntersections() <= 1) {
 			if (getX() >= ((MarioWorld)getWorld()).playerLOffset) {
@@ -80,7 +81,7 @@ public class MarioPlayer extends Actor {
 			}
 			frame();
 			isRight = false;
-		} else if ((getWorld().isKeyPressed(KeyCode.RIGHT) || getWorld().isKeyPressed(KeyCode.D)) && getRightBlockIntersections() <= 1) {
+		} else if ((getWorld().isKeyPressed(KeyCode.RIGHT) || getWorld().isKeyPressed(KeyCode.D)) && getRightBlockIntersections() <= 1 ) {
 			if (getX() <= getWorld().getWidth() - ((MarioWorld)getWorld()).playerROffset) {
 				move(speed,0);
 			}

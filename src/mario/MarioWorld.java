@@ -2,12 +2,16 @@ package mario;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.net.URISyntaxException;
 import java.util.Random;
 import java.util.Scanner;
 
 import engine.Actor;
 import engine.World;
 import javafx.scene.Node;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 
 public class MarioWorld extends World {
 	private final static int MARIO_POS = 60;
@@ -17,21 +21,31 @@ public class MarioWorld extends World {
 	public int playerLOffset = 300;
 	public int playerROffset = 500;
 	
+	MediaView mediaView;
+	
 	int levelOn = 1;
 	
+	UnbreakaBlock end = new UnbreakaBlock();
 	File f = new File("Level1.txt");
 	public MarioWorld() {
+		playMusic("tgtf.mp3");
+		end.setX(5730);
+		end.setY(0);
+		add(end);
 		setPrefSize(w, h);
 	}
 
 	@Override
 	public void act(long now) {
 		if (!mario.getDead()) {
-			if (mario.getX() > w - playerROffset && mario.isGoingRight() && !mario.blockOnRight()) {
+			if (mario.getX() > w - playerROffset && mario.isGoingRight()&& mario.getRightBlockIntersections() <= 1 && mario.getTopBlockIntersections() <= 1) {
 				moveAll((int)-mario.getSpeed(), 0, false);
-			} else if (mario.getX() < playerLOffset && mario.isGoingLeft() && !mario.blockOnLeft()) {
+			} else if (mario.getX() < playerLOffset && mario.isGoingLeft() &&mario.getLeftBlockIntersections() <= 1 && mario.getTopBlockIntersections() <= 1) {
 				moveAll((int)mario.getSpeed(), 0, false);
 			}
+		}
+		if (end.getX() <= 870 && end.getX() % 30 == 0.0) {
+			System.out.println(end.getX());
 		}
 	}
 	
@@ -48,40 +62,6 @@ public class MarioWorld extends World {
 		
 		
 		start();
-		//testWorld();
-		/*
-		int x = 0;
-		int y = (int) (getHeight()-new Brick(false).getHeight());
-		makeBricks(x, y, 4, 100, false);
-		makeBricks(200, 360, 1, 2, true);
-		makeBricks(500, 360, 1, 2, false);
-		//makeBricks(100, 250, 1, 10, true);
-		mario = new MarioPlayer();
-		mario.setX(40);
-		mario.setY(y - new Brick(false).getHeight()*4 - mario.getHeight());
-		add(mario);
-		
-		makePipe(100,360,6,1);
-		
-		Goomba goomba = new Goomba();
-		goomba.setX(800);
-		goomba.setY(300);
-		add(goomba);
-		
-		
-		KoopaTroopa kt = new KoopaTroopa(true);
-		kt.setX(350);
-		kt.setY(300);
-		add(kt);
-		
-//		Pipe p = new Pipe(1, 2);
-//		p.setX(600);
-//		p.setY(360);
-//		add(p);
-		
-		makePipe(600,360,6,2);
-		*/
-//		
 	}
 	
 	public void loadWorld(File f) throws Exception {
@@ -130,7 +110,12 @@ public class MarioWorld extends World {
 				a.setX(x);
 				a.setY(y);
 				add(a);
+				if (a.getClass() == Brick.class || a.getClass() == Pipe.class || a.getClass() == ExtendPipe.class
+						|| a.getClass() == QuestionBlock.class|| a.getClass() == UnbreakaBlock.class) {
+					a.getTimer().stop();
+				}
 			}
+			
 		}
 		scan.close();
 		//System.out.println("file found!");
@@ -332,5 +317,17 @@ public class MarioWorld extends World {
 			}
 		}
 	}
-
+	public void playMusic(String url) {
+		try {
+			mediaView = new MediaView();
+			String filename = getClass().getResource(url).toURI().toString();
+			Media media = new Media(filename);  
+			MediaPlayer player = new MediaPlayer(media);
+			
+			mediaView.setMediaPlayer(player);
+			mediaView.getMediaPlayer().play();
+		} catch (URISyntaxException e) {
+			System.out.println("syntax exception");
+		}
+	}
 }
