@@ -15,7 +15,7 @@ import javafx.scene.input.KeyCode;
 public class MarioPlayer extends Actor {
 	double speed;
 	boolean canJump = false;
-	int vel = 0;
+	double vel = 0;
 	int jumpSpeed = 4;
 	int frame = 1;
 	boolean isRight = false;
@@ -73,8 +73,8 @@ public class MarioPlayer extends Actor {
 				 move(0, 5);
 			 }
 			 vel = 0;
-		 }else if((getWorld().isKeyPressed(KeyCode.UP) || getWorld().isKeyPressed(KeyCode.W)) && blockOnBottom() && getTopBlockIntersections() == 0) {
-				jump(-15);
+		 }else if((getWorld().isKeyPressed(KeyCode.UP) || getWorld().isKeyPressed(KeyCode.W)) && blockOnBottom() && getTopBlockIntersections() <= 3) {
+				jump(-10);
 		 } else if ((getWorld().isKeyPressed(KeyCode.LEFT) || getWorld().isKeyPressed(KeyCode.A)) && getLeftBlockIntersections() <= 1) {
 			if (getX() >= ((MarioWorld)getWorld()).playerLOffset) {
 				move(-speed,0);
@@ -173,7 +173,7 @@ public class MarioPlayer extends Actor {
 	}
 	private void gravity() {
 		// TODO Auto-generated method stub
-		vel+=1;
+		vel+=.5;
 		move(0,vel);
 		if(this.getOneObjectAtOffset(0, (int)getHeight()/2, Block.class) == null) {
 			canJump = false;

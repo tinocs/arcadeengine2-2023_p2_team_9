@@ -34,7 +34,7 @@ public class driver extends Application {
 	static int save = 1;
 	
 	int displacement;
-	private static final String NAME = "Level1";
+	private static final String NAME = "Level2";
 	
 	MediaView mediaView;
 	BorderPane root;
