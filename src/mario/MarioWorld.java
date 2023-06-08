@@ -142,6 +142,11 @@ public class MarioWorld extends World {
 		makeBricks(x, y, 4, 66, false);
 		
 		koopaTroopa(350, 360);
+		Powerup p = new Powerup();
+		p.setX(300);
+		p.setY(100);
+		add(p);
+		
 		newQBlock(210, 270);
 		makeBricks(300, 270, 1, 5, true);
 		newQBlock(360, 180);

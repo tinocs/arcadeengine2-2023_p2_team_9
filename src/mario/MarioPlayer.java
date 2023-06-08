@@ -180,9 +180,12 @@ public class MarioPlayer extends Actor {
 		}else {
 			vel = 0;
 			Block touch = getOneObjectAtOffset(0, (int)getHeight()/2, Block.class);
-			setY(touch.getY() - getHeight());
+			setY(touch.getY() - getHeight()); 
 			canJump = true;
 			vel = 0;
+		}
+		if(getY() > 6000) {
+			setDead(true);
 		}
 		
 		
