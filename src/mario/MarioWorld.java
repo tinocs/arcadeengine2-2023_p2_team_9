@@ -31,10 +31,6 @@ public class MarioWorld extends World {
 	Random r = new Random();
 	boolean godmode = false;
 	public MarioWorld() {
-		playMusic("tgtf.mp3");
-		
-		
-		
 		setPrefSize(w, h);
 	}
 
@@ -351,8 +347,12 @@ public class MarioWorld extends World {
 	
 	public void loadLevel() throws Exception {
 		stopAll();
+		if (levelOn != 1) {
+			mediaView.getMediaPlayer().pause();
+		}
 		if (levelOn == 1) {
 			loadWorld(new File("Level1.txt"));
+			playMusic("tgtf.mp3");
 		} else if (levelOn == 2) {
 			loadWorld(new File("Level2.txt"));
 			playMusic("sbt.mp3");
