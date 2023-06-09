@@ -9,6 +9,7 @@ import java.util.Scanner;
 import engine.Actor;
 import engine.World;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
@@ -25,27 +26,34 @@ public class MarioWorld extends World {
 	
 	int levelOn = 1;
 	
-	UnbreakaBlock end = new UnbreakaBlock();
-	File f = new File("Level1.txt");
+	QuestionBlock end = new QuestionBlock();
+	
+	Random r = new Random();
+	boolean godmode = false;
 	public MarioWorld() {
 		playMusic("tgtf.mp3");
-		end.setX(5730);
-		end.setY(0);
-		add(end);
+		
+		
+		
 		setPrefSize(w, h);
 	}
 
 	@Override
 	public void act(long now) {
-		if (!mario.getDead()) {
+		if (mario != null && !mario.getDead()) {
 			if (mario.getX() > w - playerROffset && mario.isGoingRight()&& mario.getRightBlockIntersections() <= 1 && mario.getTopBlockIntersections() <= 1) {
 				moveAll((int)-mario.getSpeed(), 0, false);
 			} else if (mario.getX() < playerLOffset && mario.isGoingLeft() &&mario.getLeftBlockIntersections() <= 1 && mario.getTopBlockIntersections() <= 1) {
 				moveAll((int)mario.getSpeed(), 0, false);
 			}
 		}
-		if (end.getX() <= 870 && end.getX() % 30 == 0.0) {
-			System.out.println(end.getX());
+		if (end.getX() <= 660 && end.getX() >= 600.0 && end.getX() % 30 == 0.0) {
+			levelOn++;
+			try {
+				loadLevel();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	
@@ -54,12 +62,11 @@ public class MarioWorld extends World {
 		
 		
 		try {
-			loadWorld(f);
+			loadLevel();
 		} catch (Exception e) { 
 			System.out.println("File not found."); 
 			e.printStackTrace();
 		}
-		
 		
 		start();
 	}
@@ -67,7 +74,13 @@ public class MarioWorld extends World {
 	public void loadWorld(File f) throws Exception {
 		Scanner scan = new Scanner(f);
 		
+		
 		this.getChildren().removeAll(getChildren());
+		
+		end.setX(5610);
+		end.setY(0);
+		add(end);
+		
 		
 		while (scan.hasNext()) {
 			String str = scan.nextLine();
@@ -76,7 +89,7 @@ public class MarioWorld extends World {
 			String actorClass = str.substring(str.indexOf(':')+1) ;
 			//System.out.println("adding at " + x + ", " + y + " class is " + actorClass);
 			Actor a = null;
-			Random r = new Random();
+			
 			int rand = r.nextInt(1);
 			if (actorClass.equals("Brick")) {
 				if (rand == 0) {
@@ -86,13 +99,13 @@ public class MarioWorld extends World {
 				}
 			} else if (actorClass.equals("QuestionBlock")) {
 				a = new QuestionBlock();
-			} else if (actorClass.equals("UnbreakaBlock")) {
-				a = new UnbreakaBlock();
+			} else if (actorClass.equals("Goomba") && !godmode) {
+				a = new Goomba();
 			} else if (actorClass.equals("Pipe")) {
 				a = new Pipe(1);
 			} else if (actorClass .equals("ExtendPipe")) {
 				a = new ExtendPipe(1);
-			}else if (actorClass.equals("KoopaTroopa")) {
+			}else if (actorClass.equals("KoopaTroopa") && !godmode) {
 				if (rand == 0) {
 					a = new KoopaTroopa(false);
 				} else {
@@ -103,8 +116,8 @@ public class MarioWorld extends World {
 				mario.setX(x);
 				mario.setY(y);
 				add(mario);
-			} else {
-				a = new Goomba();
+			} else if (actorClass.equals("UnbreakaBlock")){
+				a = new UnbreakaBlock();
 			}
 			if (a != null) {
 				a.setX(x);
@@ -333,6 +346,39 @@ public class MarioWorld extends World {
 			mediaView.getMediaPlayer().play();
 		} catch (URISyntaxException e) {
 			System.out.println("syntax exception");
+		}
+	}
+	
+	public void loadLevel() throws Exception {
+		stopAll();
+		if (levelOn == 1) {
+			loadWorld(new File("Level1.txt"));
+		} else if (levelOn == 2) {
+			loadWorld(new File("Level2.txt"));
+			playMusic("sbt.mp3");
+		} else if (levelOn == 3) {
+			loadWorld(new File("Level3.txt"));
+			playMusic("ttn.mp3");
+		} else if (levelOn == 4) {
+			loadWorld(new File("Level4.txt"));
+			playMusic("tui.mp3");
+		} else if (levelOn == 5) {
+			loadWorld(new File("Level5.txt"));
+			playMusic("wir.mp3");
+		}  else if (levelOn == 6) {
+			Label l = new Label("You won!");
+			l.setLayoutX(400);
+			l.setLayoutY(250);
+			getChildren().add(l);
+		}
+	}
+	
+	public void stopAll() {
+		for (Node n : getChildren()) {
+			if (n.getClass() != Label.class) {
+				((Actor) n).getTimer().stop();
+				
+			}
 		}
 	}
 }

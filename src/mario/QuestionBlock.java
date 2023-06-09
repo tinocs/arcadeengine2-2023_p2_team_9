@@ -23,10 +23,13 @@ public class QuestionBlock extends Block {
 		unb.setX(getX());
 		unb.setY(getY());
 		getWorld().add(unb);
+		
+		/*
 		Powerup pow = new Powerup();
 		pow.setX(getX());
 		pow.setY(getY() - getHeight()/2);
 		getWorld().add(pow);
+		*/
 		
 		getWorld().remove(this);
 	}

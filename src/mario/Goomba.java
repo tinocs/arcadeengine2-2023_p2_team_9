@@ -25,6 +25,10 @@ public class Goomba extends Enemy {
 	
 	@Override
 	public void act(long now) {
+		if (getOneIntersectingObject(KoopaTroopa.class) != null) {
+			setImage(goombaSquish);
+			isDead = true;
+		}
 		if (getX() >= -90 && getX() <= 900) {
 			gravity();
 			playerInteraction();

@@ -54,7 +54,7 @@ public class MarioPlayer extends Actor {
 		isDead = bool;
 		if (isDead) {
 			setImage(death);
-			Label l = new Label("You lost!");
+			Label l = new Label("You lost! Press \"r\" to restart");
 			l.setLayoutX(400);
 			l.setLayoutY(250);
 			getWorld().getChildren().add(l);
@@ -74,7 +74,7 @@ public class MarioPlayer extends Actor {
 			 }
 			 vel = 0;
 		 }else if((getWorld().isKeyPressed(KeyCode.UP) || getWorld().isKeyPressed(KeyCode.W)) && blockOnBottom() && getTopBlockIntersections() <= 3) {
-				jump(-10);
+				jump(-11.5);
 		 } else if ((getWorld().isKeyPressed(KeyCode.LEFT) || getWorld().isKeyPressed(KeyCode.A)) && getLeftBlockIntersections() <= 1) {
 			if (getX() >= ((MarioWorld)getWorld()).playerLOffset) {
 				move(-speed,0);
@@ -177,20 +177,20 @@ public class MarioPlayer extends Actor {
 		move(0,vel);
 		if(this.getOneObjectAtOffset(0, (int)getHeight()/2, Block.class) == null) {
 			canJump = false;
-		}else {
+		} else {
 			vel = 0;
 			Block touch = getOneObjectAtOffset(0, (int)getHeight()/2, Block.class);
 			setY(touch.getY() - getHeight()); 
 			canJump = true;
 			vel = 0;
 		}
-		if(getY() > 6000) {
+		if(getY() > 1000) {
 			setDead(true);
 		}
 		
 		
 	}
-	public void jump(int vel) {
+	public void jump(double vel) {
 		// TODO Auto-generated method stub
 		if(canJump) {
 			this.vel = vel;
