@@ -65,23 +65,24 @@ public class MarioPlayer extends Actor {
 	}
 	private void controls() {
 		 if (getTopBlockIntersections() > 12) {
-			 if (this.getOneObjectAtOffset((int)-getWidth()/2, (int)-getHeight()/2, Block.class) != null) {
+			 if (this.getOneObjectAtOffset((int)-getWidth()/2, (int)-getHeight()/2, Block.class) != null || this.getOneObjectAtOffset((int)getWidth()/2, (int)-getHeight()/2, Block.class) != null) {
 				 this.getOneObjectAtOffset((int)-getWidth()/2, (int)-getHeight()/2, Block.class).killSwitch();
-				 move(0, 5);
-			 } else if (this.getOneObjectAtOffset((int)getWidth()/2, (int)-getHeight()/2, Block.class) != null) {
 				 this.getOneObjectAtOffset((int)getWidth()/2, (int)-getHeight()/2, Block.class).killSwitch();
+				 
 				 move(0, 5);
-			 }
+			 } /*else if (this.getOneObjectAtOffset((int)getWidth()/2, (int)-getHeight()/2, Block.class) != null) {
+				 
+			 }*/
 			 vel = 0;
-		 }else if((getWorld().isKeyPressed(KeyCode.UP) || getWorld().isKeyPressed(KeyCode.W)) && blockOnBottom() && getTopBlockIntersections() <= 3) {
+		 }else if((getWorld().isKeyPressed(KeyCode.UP) || getWorld().isKeyPressed(KeyCode.W)) && blockOnBottom()) {
 				jump(-11.5);
-		 } else if ((getWorld().isKeyPressed(KeyCode.LEFT) || getWorld().isKeyPressed(KeyCode.A)) && getLeftBlockIntersections() <= 1) {
+		 } else if ((getWorld().isKeyPressed(KeyCode.LEFT) || getWorld().isKeyPressed(KeyCode.A)) && !blockOnLeftMiddle()) {
 			if (getX() >= ((MarioWorld)getWorld()).playerLOffset) {
 				move(-speed,0);
 			}
 			frame();
 			isRight = false;
-		} else if ((getWorld().isKeyPressed(KeyCode.RIGHT) || getWorld().isKeyPressed(KeyCode.D)) && getRightBlockIntersections() <= 1 ) {
+		} else if ((getWorld().isKeyPressed(KeyCode.RIGHT) || getWorld().isKeyPressed(KeyCode.D)) && !blockOnRightMiddle()) {
 			if (getX() <= getWorld().getWidth() - ((MarioWorld)getWorld()).playerROffset) {
 				move(speed,0);
 			}
@@ -95,6 +96,9 @@ public class MarioPlayer extends Actor {
 			}
 			//frame = 1;
 		}
+		 if (blockOnTop()) {
+			 vel *= -1;
+		 }
 		
 	}
 	public int getLeftBlockIntersections() {
@@ -131,7 +135,7 @@ public class MarioPlayer extends Actor {
 		return this.getOneObjectAtOffset(dx, dy, Block.class) != null;
 	}
 	public boolean blockOnTop() {
-		return (this.getOneObjectAtOffset(-(int)getWidth()/2, (int)-getHeight()/2, Block.class) != null || this.getOneObjectAtOffset((int)getWidth()/2, (int)-getHeight()/2, Block.class) != null) && this.getOneObjectAtOffset(0, (int)-getHeight()/2, Block.class) != null;
+		return (this.getOneObjectAtOffset(-(int)getWidth()/2, (int)-getHeight()/2, Block.class) != null || this.getOneObjectAtOffset((int)getWidth()/2, (int)-getHeight()/2, Block.class) != null) || this.getOneObjectAtOffset(0, (int)-getHeight()/2, Block.class) != null;
 	}
 	public boolean blockOnBottom() {
 		return this.getOneObjectAtOffset(-(int)getWidth()/2, (int)getHeight()/2, Block.class) != null || this.getOneObjectAtOffset((int)getWidth()/2, (int)getHeight()/2, Block.class) != null;
@@ -139,8 +143,14 @@ public class MarioPlayer extends Actor {
 	public boolean blockOnLeft() {
 		return (this.getOneObjectAtOffset(-(int)getWidth()/2, (int)getHeight()/2, Block.class) != null || this.getOneObjectAtOffset(-(int)getWidth()/2, -(int)getHeight()/2, Block.class) != null)  && this.getOneObjectAtOffset(-(int)getWidth()/2, 0, Block.class) != null;
 	}
+	public boolean blockOnLeftMiddle() {
+		return (this.getOneObjectAtOffset(-(int)getWidth()/2, 0, Block.class) != null);
+	}
 	public boolean blockOnRight() {
 		return (this.getOneObjectAtOffset((int)getWidth()/2, (int)getHeight()/2, Block.class) != null || this.getOneObjectAtOffset((int)getWidth()/2, -(int)getHeight()/2, Block.class) != null) && this.getOneObjectAtOffset((int)getWidth()/2, 0, Block.class) != null;
+	}
+	public boolean blockOnRightMiddle() {
+		return (this.getOneObjectAtOffset((int)getWidth()/2, 0, Block.class) != null);
 	}
 	public boolean isGoingRight() {
 		return (getWorld().isKeyPressed(KeyCode.RIGHT) || getWorld().isKeyPressed(KeyCode.D));

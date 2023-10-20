@@ -339,7 +339,7 @@ public class MarioWorld extends World {
 			MediaPlayer player = new MediaPlayer(media);
 			
 			mediaView.setMediaPlayer(player);
-			mediaView.getMediaPlayer().play();
+			//mediaView.getMediaPlayer().play();
 		} catch (URISyntaxException e) {
 			System.out.println("syntax exception");
 		}
